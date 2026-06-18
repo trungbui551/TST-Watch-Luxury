@@ -1,0 +1,49 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: tst-watch-luxury-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: tst_watch_luxury
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - luxury-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tst-watch-luxury-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=rootpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src/main/webapp/resources/images:/app/src/main/webapp/resources/images
+      - ./target/tstWatchLuxury/resources/images:/app/target/tstWatchLuxury/resources/images
+    networks:
+      - luxury-network
+
+volumes:
+  db_data:
+
+networks:
+  luxury-network:
+    driver: bridge

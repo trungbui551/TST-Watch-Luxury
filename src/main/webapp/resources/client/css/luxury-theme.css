@@ -1,0 +1,1188 @@
+/* ==========================================================================
+   LUXURY DESIGN SYSTEM - PREMIUM THEME
+   Project: LapTopShop Premium
+   Style: Luxury / Dark Sapphire & Metallic Gold
+   ========================================================================== */
+
+/* 1. Google Fonts Preload Fallback */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  /* Core Luxury Variables */
+  --bg-luxury: #0b0c10;          /* Deep Sapphire/Obsidian Black */
+  --gold-accent: #d4af37;        /* Metallic Gold (Rolex/Patek style) */
+  --gold-light: #f3e5ab;         /* Silk/Champagne Gold */
+  --gold-dark: #aa7c11;          /* Antique/Burnished Gold */
+  --text-primary: #f5f5f7;       /* Sterling Silver White */
+  --text-muted: #86868b;         /* Apple Space Gray Muted */
+  --border-thin: rgba(212, 175, 55, 0.2); /* Ultra-fine Gold Border */
+
+  /* Override Base Design Tokens */
+  --color-primary: var(--gold-accent);
+  --color-primary-light: var(--gold-light);
+  --color-primary-dark: var(--gold-dark);
+
+  --color-bg: var(--bg-luxury);
+  --color-bg-gradient: radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                       radial-gradient(circle at 100% 100%, rgba(11, 12, 16, 0.95) 0%, #06070a 100%);
+  --color-surface: #11131a;      /* Sleek dark chamber card background */
+  --color-surface-elevated: #1a1d26;
+  --color-border: var(--border-thin);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: #c8c8cc;
+  --color-text-muted: var(--text-muted);
+
+  --font-heading: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Inter', 'Montserrat', sans-serif;
+
+  /* Premium Depth & Glow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.25);
+  --shadow-glow-strong: 0 0 35px rgba(212, 175, 55, 0.45);
+
+  --radius-sm: 2px;              /* Angular precision */
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 10px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+}
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body) !important;
+  background: var(--color-bg-gradient) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading) !important;
+  color: var(--text-primary) !important;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+p, span, a, input, select, button {
+  font-family: var(--font-body) !important;
+}
+
+a {
+  color: var(--gold-accent) !important;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a:hover {
+  color: var(--gold-light) !important;
+}
+
+/* Bootstrap Table dark-theme fix — ensure text is visible */
+.table,
+.table > :not(caption) > * > * {
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+  border-bottom-color: var(--border-thin) !important;
+}
+
+.qty-input-luxury {
+  color: var(--text-primary) !important;
+}
+
+
+/* ==========================================================================
+   3. SPECIFIC LUXURY CLASSES
+   ========================================================================== */
+
+/* Luxury Card - Mechanical, precise, razor thin gold border */
+.luxury-card {
+  background: var(--color-surface);
+  border: 1px solid var(--border-thin);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.luxury-card:hover::before {
+  opacity: 1;
+}
+
+/* Luxury Button - Transparent base to Gold Fill */
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: transparent;
+  color: var(--gold-accent) !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--gold-accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-luxury::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: var(--gold-accent);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-luxury:hover {
+  color: #0b0c10 !important;
+  border-color: var(--gold-accent);
+  box-shadow: var(--shadow-glow-strong);
+  transform: translateY(-2px);
+}
+
+.btn-luxury:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ==========================================================================
+   4. DESIGN SYSTEM ENHANCEMENTS
+   ========================================================================== */
+
+/* Custom premium badge */
+.luxury-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--gold-accent);
+  border: 1px solid var(--border-thin);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Cart badge styling */
+.cart-badge {
+  background: var(--gold-accent) !important;
+  color: #0b0c10 !important;
+  border: 1px solid var(--gold-light) !important;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+  background: #11131a !important;
+  border: 1px solid var(--border-thin) !important;
+  box-shadow: var(--shadow-xl), var(--shadow-glow) !important;
+}
+
+.dropdown-item {
+  color: var(--text-primary) !important;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(212, 175, 55, 0.1) !important;
+  color: var(--gold-accent) !important;
+}
+
+/* Input Fields */
+.search-filter-input, .filter-select, .form-control {
+  background-color: #161821 !important;
+  border: 1px solid var(--border-thin) !important;
+  color: var(--text-primary) !important;
+}
+
+.search-filter-input:focus, .filter-select:focus, .form-control:focus {
+  border-color: var(--gold-accent) !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15) !important;
+  background-color: #1a1d29 !important;
+}
+
+/* Filter container decoration */
+.filter-container {
+  background: #11131a !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.filter-pill {
+  background-color: #1a1d26 !important;
+  color: var(--text-muted) !important;
+  border: 1px solid transparent !important;
+}
+
+.filter-pill:hover {
+  background-color: #242834 !important;
+  color: var(--text-primary) !important;
+}
+
+.filter-pill.active {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  color: var(--gold-accent) !important;
+  border-color: var(--gold-accent) !important;
+}
+
+
+/* Product Circle Add Cart Button */
+.btn-cart-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1a1d26 !important;
+  color: var(--gold-accent) !important;
+  border: 1px solid var(--border-thin) !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.btn-cart-circle:hover {
+  background: var(--gold-accent) !important;
+  color: #0b0c10 !important;
+  box-shadow: var(--shadow-glow-strong) !important;
+  transform: translateY(-2px);
+}
+
+/* Pagination Layout & Overrides */
+.premium-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  list-style: none;
+  padding: 32px 0 0;
+  margin: 0;
+}
+
+.premium-page-item {
+  list-style: none;
+}
+
+.premium-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  background: #11131a !important;
+  border: 1px solid var(--border-thin) !important;
+  color: var(--text-primary) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.premium-page-link:hover {
+  border-color: var(--gold-accent) !important;
+  color: var(--gold-accent) !important;
+  transform: translateY(-2px);
+}
+
+.premium-page-item.active .premium-page-link {
+  background: var(--gold-accent) !important;
+  color: #0b0c10 !important;
+  border-color: var(--gold-accent) !important;
+  box-shadow: var(--shadow-glow) !important;
+}
+
+
+/* Footer Section Retrofit */
+footer {
+  background: #06070a !important;
+  border-top: 1px solid var(--border-thin) !important;
+}
+
+.footer-social-btn {
+  border: 1px solid var(--border-thin) !important;
+  color: var(--text-muted) !important;
+}
+
+.footer-social-btn:hover {
+  background: var(--gold-accent) !important;
+  border-color: var(--gold-accent) !important;
+  color: #0b0c10 !important;
+}
+
+.footer-link:hover {
+  color: var(--gold-accent) !important;
+}
+
+/* Back to top button */
+.back-to-top {
+  background: var(--gold-accent) !important;
+  color: #0b0c10 !important;
+  box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
+}
+
+.back-to-top:hover {
+  background: var(--gold-light) !important;
+  color: #0b0c10 !important;
+}
+
+/* Toast alert styling */
+.toast-premium {
+  background: #161821 !important;
+  border: 1px solid var(--border-thin) !important;
+  border-left: 4px solid var(--gold-accent) !important;
+  color: var(--text-primary) !important;
+}
+
+.toast-premium i {
+  color: var(--gold-accent) !important;
+}
+
+/* Loading Spinner */
+.spinner-grow {
+  color: var(--gold-accent) !important;
+}
+
+
+/* ==========================================================================
+   5. HEADER & NAVBAR LUXURY OVERRIDES
+   ========================================================================== */
+.navbar-luxury {
+  background: #000000 !important; /* Absolute Black */
+  border-bottom: 1px solid var(--border-thin) !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar-luxury .nav-link-premium {
+  font-family: var(--font-body) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
+  padding: 8px 16px !important;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-luxury .nav-link-premium:hover,
+.navbar-luxury .nav-link-premium.active {
+  color: var(--gold-accent) !important;
+}
+
+/* Slimmer layout logo */
+.navbar-brand-logo {
+  font-family: var(--font-heading) !important;
+  font-weight: 700;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+  font-size: 1.35rem !important;
+  color: var(--text-primary) !important;
+}
+
+.navbar-brand-logo span {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    120deg,
+    var(--gold-accent) 0%,
+    var(--gold-accent) 35%,
+    var(--gold-light) 50%,
+    var(--gold-accent) 65%,
+    var(--gold-accent) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineGloss 4s ease-in-out infinite;
+}
+
+@keyframes shineGloss {
+  0%, 100% {
+    background-position: 200% center;
+  }
+  50% {
+    background-position: -200% center;
+  }
+}
+
+/* Minimalist icon buttons */
+.navbar-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+}
+
+.navbar-icon-btn:hover {
+  color: var(--gold-accent) !important;
+  transform: translateY(-1.5px);
+}
+
+.navbar-icon-btn svg {
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+/* Slide-out search style */
+.search-box-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.navbar-search-form {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.navbar-search-form.active {
+  width: 160px;
+  margin-left: 8px;
+}
+
+.navbar-search-input {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border-thin) !important;
+  color: var(--text-primary) !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase;
+  padding: 4px 0 !important;
+  width: 100%;
+  outline: none;
+}
+
+.navbar-search-input:focus {
+  border-bottom-color: var(--gold-accent) !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   6. FOOTER NEWSLETTER MINIMALIST FORM
+   ========================================================================== */
+.footer-title-luxury {
+  font-family: var(--font-heading) !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary) !important;
+}
+
+.footer-desc-luxury {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.newsletter-form-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-thin) !important;
+  padding-bottom: 6px;
+  transition: border-bottom-color 0.3s ease;
+}
+
+.newsletter-form-minimal:focus-within {
+  border-bottom-color: var(--gold-accent) !important;
+}
+
+.newsletter-input-minimal {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase;
+  padding: 6px 0 !important;
+  width: 100%;
+  outline: none;
+}
+
+.newsletter-input-minimal::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.newsletter-btn-minimal {
+  background: transparent !important;
+  border: none !important;
+  color: var(--gold-accent) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  padding: 6px 0 6px 16px !important;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.newsletter-btn-minimal:hover {
+  color: var(--gold-light) !important;
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
+   7. HERO BANNER & WATCH GRID DETAIL STYLES
+   ========================================================================== */
+.luxury-hero-section {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background-image: url('/resources/client/images/luxury_watch_banner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-thin);
+}
+
+.luxury-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6) !important; /* Elegant dark layer to pop text */
+  z-index: 1;
+}
+
+.luxury-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.luxury-hero-title {
+  font-family: var(--font-heading) !important;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem) !important;
+  font-weight: 300 !important; /* Light serif font */
+  line-height: 1.15 !important;
+  text-transform: uppercase;
+  color: #ffffff !important;
+  letter-spacing: 1px;
+}
+
+.text-muted-luxury {
+  color: #c8c8cc !important;
+  font-family: var(--font-body);
+}
+
+/* Gold Dot Indicator */
+.gold-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: var(--gold-accent);
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 8px var(--gold-accent);
+  vertical-align: middle;
+}
+
+/* Product Responsive Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Watch Card Specific Styles */
+.luxury-card-watch {
+  background: var(--color-surface);
+  border: 1px solid var(--border-thin);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.luxury-card-watch:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.55) !important;
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.luxury-card-watch .product-img-wrap {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.luxury-card-watch .product-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-watch:hover .product-img-wrap img {
+  transform: scale(1.08);
+}
+
+.luxury-card-watch .product-title {
+  font-family: var(--font-heading) !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+  line-height: 1.3;
+}
+
+.luxury-card-watch:hover .product-title {
+  color: var(--gold-accent) !important;
+}
+
+.luxury-card-watch .product-price {
+  font-family: var(--font-body) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: var(--gold-accent) !important;
+}
+
+/* Sapphire Glass Sheen Sweep Reflection Effect */
+.luxury-card-watch .product-img-wrap::after,
+.detail-image-zoom-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 30%,
+    rgba(212, 175, 55, 0.1) 50%,
+    rgba(255, 255, 255, 0.15) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.luxury-card-watch:hover .product-img-wrap::after {
+  left: 150%;
+  transition: left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.detail-image-zoom-container::after {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  z-index: 2;
+}
+
+.detail-image-zoom-container:hover::after {
+  left: 150%;
+  transition: left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Detail Image Zoom Container styling */
+.detail-image-zoom-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-image-zoom-container img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.2s ease-out, transform-origin 0.1s ease-out;
+}
+
+/* Minimalist Qty Picker */
+.qty-control-luxury {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-thin);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding: 4px;
+}
+
+.qty-btn-luxury {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.qty-btn-luxury:hover {
+  color: var(--gold-accent);
+}
+
+.qty-input-luxury {
+  background: transparent !important;
+  border: none;
+  color: var(--gold-accent) !important;
+  width: 48px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Action CTA Full-width */
+.btn-luxury-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000 !important;
+  color: var(--gold-accent) !important;
+  border: 1px solid var(--gold-accent) !important;
+  font-family: var(--font-body) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 16px 32px !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  width: 100%;
+  text-decoration: none;
+}
+
+.btn-luxury-action:hover {
+  background: var(--gold-accent) !important;
+  color: #000000 !important;
+  box-shadow: var(--shadow-glow) !important;
+}
+
+.detail-tab-nav .nav-tabs {
+  border-bottom: 1px solid var(--border-thin) !important;
+}
+
+.detail-tab-nav .nav-link {
+  font-family: var(--font-heading) !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 14px;
+  color: var(--text-muted) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 24px;
+  position: relative;
+}
+
+.detail-tab-nav .nav-link.active {
+  color: var(--gold-accent) !important;
+}
+
+.detail-tab-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 2px;
+  background-color: var(--gold-accent);
+}
+
+/* ==========================================================================
+   9. GLOBAL FEATURES HIGHLIGHTS STYLES
+   ========================================================================== */
+.features-section-luxury {
+  background: #06070a !important; /* Deep black space */
+  padding: 80px 0 !important;
+  border-top: 1px solid var(--border-thin) !important;
+}
+
+.feature-card-luxury {
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface) !important;
+  padding: 32px 24px !important;
+  text-align: center;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.feature-card-luxury:hover {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  box-shadow: var(--shadow-glow), var(--shadow-xl) !important;
+  transform: translateY(-4px) !important;
+}
+
+.feature-icon-luxury {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid var(--border-thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: var(--gold-accent);
+}
+
+.feature-icon-luxury svg {
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+.feature-title-luxury {
+  font-family: var(--font-heading) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase;
+  color: var(--text-primary) !important;
+  margin-bottom: 12px !important;
+}
+
+.feature-desc-luxury {
+  font-family: var(--font-body) !important;
+  font-weight: 300 !important;
+  font-size: 13px !important;
+  color: var(--text-muted) !important;
+  line-height: 1.6 !important;
+  margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   10. CHECKOUT LUXURY STYLE
+   ========================================================================== */
+.checkout-input-luxury {
+  background: transparent !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 16px !important;
+  font-family: var(--font-body) !important;
+  width: 100%;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+}
+
+.checkout-input-luxury:focus {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+}
+
+.checkout-label-luxury {
+  font-family: var(--font-body) !important;
+  font-weight: 300 !important;
+  font-size: 11px !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted) !important;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ==========================================================================
+   11. PROFILE SETTINGS LUXURY STYLE
+   ========================================================================== */
+.profile-card-luxury {
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface) !important;
+  padding: 40px !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+}
+
+.profile-avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-thin) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.profile-avatar-edit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #000000 !important;
+  border: 1px solid var(--border-thin) !important;
+  color: var(--gold-accent) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+}
+
+.profile-avatar-edit-btn:hover {
+  background: var(--gold-accent) !important;
+  color: #000000 !important;
+}
+
+.profile-input-wrapper {
+  position: relative;
+}
+
+.profile-input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold-accent) !important;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-input-luxury {
+  background: transparent !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 16px 12px 48px !important;
+  font-family: var(--font-body) !important;
+  width: 100%;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+}
+
+.profile-input-luxury:focus {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+}
+
+.profile-input-luxury:disabled {
+  background: rgba(255,255,255,0.02) !important;
+  color: var(--text-muted) !important;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   12. AUTHENTICATION PAGES LUXURY STYLE
+   ========================================================================== */
+.auth-body-luxury {
+  background: #0b0c10 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-card-luxury {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 48px 40px !important;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-2xl) !important;
+  text-align: center;
+  animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.auth-logo-luxury {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle-luxury {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+}
+
+.auth-input-luxury {
+  background: transparent !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 14px 16px !important;
+  font-family: var(--font-body) !important;
+  width: 100%;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+}
+
+.auth-input-luxury:focus {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+}
+
+.auth-error-luxury {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  font-family: var(--font-body);
+  font-size: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+.auth-link-luxury {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.auth-link-luxury:hover {
+  color: var(--gold-accent) !important;
+}
+
+/* 9. Keyframes Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
