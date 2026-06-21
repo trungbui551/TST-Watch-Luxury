@@ -138,15 +138,6 @@
 <jsp:include page="../layout/footer.jsp" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function calculateTotal() {
-        let subtotalText = document.getElementById("subtotal").innerText;
-        let shippingText = document.getElementById("shipping").innerText;
-        let subtotal = parseFloat(subtotalText.replace(/[^0-9]/g, "")) || 0;
-        let shipping = parseFloat(shippingText.replace(/[^0-9]/g, "")) || 0;
-        document.getElementById("total").innerText = (subtotal + shipping).toLocaleString('vi-VN') + " đ";
-    }
-    window.onload = calculateTotal;
-</script>
+<script src="/resources/client/js/cart/checkout.js?v=1.5" defer></script>
 </body>
 </html>

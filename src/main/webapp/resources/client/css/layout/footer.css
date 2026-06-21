@@ -1,0 +1,57 @@
+.messenger-fab-fallback {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    z-index: 9997;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: messengerPulse 2.5s infinite;
+}
+
+.messenger-fab-fallback:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+    animation: none;
+}
+
+@keyframes messengerPulse {
+    0%,
+    100% {
+        box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 32px rgba(212, 175, 55, 0.5), 0 0 0 8px rgba(212, 175, 55, 0.1);
+    }
+}
+
+.messenger-fab-fallback::before {
+    content: 'Tư vấn cá nhân';
+    position: absolute;
+    right: 70px;
+    background: #11131a;
+    color: white;
+    border: 1px solid var(--border-thin);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: var(--font-body);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    box-shadow: var(--shadow-md);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.messenger-fab-fallback:hover::before {
+    opacity: 1;
+}

@@ -1,0 +1,30 @@
+body { padding-top: 72px; }
+
+.cart-table th {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border-thin) !important;
+    padding: 16px;
+}
+.cart-table td {
+    padding: 24px 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-thin) !important;
+    color: var(--text-primary);
+}
+.cart-product-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+.cart-product-title:hover {
+    color: var(--gold-accent) !important;
+}

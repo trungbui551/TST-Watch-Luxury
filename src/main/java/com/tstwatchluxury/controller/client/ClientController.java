@@ -106,14 +106,14 @@ public class ClientController {
     }
 
     @GetMapping("/regitrationConfirm")
-    public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token) {
+    public String confirmRegistration(WebRequest request, RedirectAttributes redirectAttributes, @RequestParam("token") String token) {
 
         Locale locale = request.getLocale();
 
         VerificationToken verificationToken = service.getVerificationToken(token);
         if (verificationToken == null) {
             String message = messages.getMessage("auth.message.invalidToken", null, locale);
-            model.addAttribute("message", message);
+            redirectAttributes.addAttribute("message", message);
             return "redirect:/badUser?lang=" + locale.getLanguage();
         }
 
@@ -121,7 +121,7 @@ public class ClientController {
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             String messageValue = messages.getMessage("auth.message.expired", null, locale);
-            model.addAttribute("message", messageValue);
+            redirectAttributes.addAttribute("message", messageValue);
             return "redirect:/badUser?lang=" + locale.getLanguage();
         }
 
@@ -152,18 +152,25 @@ public class ClientController {
         User user = this.userService.getUserByEmail(email);
         eventPublisher.publishEvent(new OnResetPasswordEvent(user,
                 request.getLocale(), appUrl));
+
+        // Truyền thời điểm hết hạn (epoch ms) xuống view để JSP hiển thị đếm ngược
+        // Token hiệu lực trong VerificationToken.EXPIRATION phút (hiện tại = 60*24 = 1440 phút)
+        long expiryEpochMs = System.currentTimeMillis() + (long) VerificationToken.getExpiration() * 60 * 1000;
+        model.addAttribute("tokenExpiryEpoch", expiryEpochMs);
+
         return "client/auth/emailCheck";
     }
 
+
     @GetMapping("/userConfirm")
-    public String userConfirm(WebRequest request, Model model, @RequestParam("token") String token) {
+    public String userConfirm(WebRequest request, RedirectAttributes redirectAttributes, @RequestParam("token") String token) {
 
         Locale locale = request.getLocale();
 
         VerificationToken verificationToken = service.getVerificationToken(token);
         if (verificationToken == null) {
             String message = messages.getMessage("auth.message.invalidToken", null, locale);
-            model.addAttribute("message", message);
+            redirectAttributes.addAttribute("message", message);
             System.out.println("------------------------------- NULL");
             return "redirect:/badUser?lang=" + locale.getLanguage();
 
@@ -173,7 +180,7 @@ public class ClientController {
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             String messageValue = messages.getMessage("auth.message.expired", null, locale);
-            model.addAttribute("message", messageValue);
+            redirectAttributes.addAttribute("message", messageValue);
             System.out.println("------------------------------- Hết Hạn");
             return "redirect:/badUser?lang=" + locale.getLanguage();
         }
@@ -225,7 +232,8 @@ public class ClientController {
     }
 
     @GetMapping("/badUser")
-    public String getBadUser() {
+    public String getBadUser(@RequestParam(value = "message", required = false) String message, Model model) {
+        model.addAttribute("message", message);
         return "client/auth/badUser";
     }
 }

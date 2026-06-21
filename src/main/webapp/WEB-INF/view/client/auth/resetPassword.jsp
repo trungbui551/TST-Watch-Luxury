@@ -56,22 +56,7 @@
         </form>
     </div>
 
-    <script type="text/javascript">
-        function passwordChecking() {
-            var password = document.getElementById("password").value;
-            var passwordafter = document.getElementById("repeatpassword").value;
-            var errorDiv = document.getElementById("msg");
-            if (password !== passwordafter) {
-                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Mật khẩu không khớp!';
-                errorDiv.classList.remove("d-none");
-                return false;
-            } else {
-                errorDiv.innerHTML = "";
-                errorDiv.classList.add("d-none");
-                return true;
-            }
-        }
-    </script>
+    <script src="/resources/client/js/auth/reset-password.js?v=1.5" defer></script>
 </body>
 
 </html>

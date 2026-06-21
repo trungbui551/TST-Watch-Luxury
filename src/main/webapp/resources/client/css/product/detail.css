@@ -1,0 +1,87 @@
+body { padding-top: 72px; }
+.review-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    object-fit: cover; border: 1px solid var(--border-thin);
+}
+.star-filled { color: var(--gold-accent); }
+.star-empty  { color: rgba(255, 255, 255, 0.2); }
+
+/* Custom Carousel styles */
+.related-carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 12px 0;
+}
+.related-carousel-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+.related-carousel-item {
+    flex: 0 0 25%;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+@media (max-width: 1024px) {
+    .related-carousel-item {
+        flex: 0 0 33.333%;
+    }
+}
+@media (max-width: 768px) {
+    .related-carousel-item {
+        flex: 0 0 50%;
+    }
+}
+@media (max-width: 480px) {
+    .related-carousel-item {
+        flex: 0 0 100%;
+    }
+}
+/* Navigation buttons in gallery */
+.btn-gallery-nav {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+.btn-gallery-nav:hover {
+    background: var(--gold-accent);
+    color: #000;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    border-color: var(--gold-accent);
+}
+/* Thumbnail items */
+.gallery-thumb-item {
+    width: 68px;
+    height: 68px;
+    padding: 3px;
+    border: 1px solid var(--border-thin);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gallery-thumb-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 2px;
+}
+.gallery-thumb-item:hover, .gallery-thumb-item.active {
+    border-color: var(--gold-accent);
+    background: rgba(212, 175, 55, 0.05);
+}

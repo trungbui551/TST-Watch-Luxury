@@ -1,0 +1,6 @@
+body { padding-top: 72px; }
+.profile-container-luxury {
+    max-width: 600px;
+    margin: 60px auto 80px;
+}
+#avatarFile { display: none; }

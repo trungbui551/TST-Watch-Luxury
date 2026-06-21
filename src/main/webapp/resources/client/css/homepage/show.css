@@ -1,0 +1,127 @@
+.filter-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: 32px 32px 24px 32px; /* Fix collapsed padding and provide extra bottom space */
+    margin-bottom: 48px; /* Fix collapsed margin-bottom to separate cards below */
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.filter-container:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.filter-group-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2);
+    opacity: 0.8;
+}
+
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: var(--color-gray-100);
+    color: var(--color-text-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.filter-pill:hover {
+    background-color: var(--color-gray-200);
+    color: var(--color-text-primary);
+    transform: translateY(-1px);
+}
+
+.filter-pill.active {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary-light);
+    font-weight: 600;
+}
+
+.search-filter-input {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 10px 16px 10px 40px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: var(--color-gray-50);
+    color: var(--color-text-primary);
+}
+
+.search-filter-input:focus {
+    background-color: #fff;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.search-filter-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-filter-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.filter-select {
+    padding: 10px 36px 10px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    color: var(--color-text-primary);
+    background-color: var(--color-gray-50);
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.filter-select:focus {
+    background-color: #fff;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.clear-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-error);
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    transition: all 0.2s ease;
+}
+
+.clear-filter-btn:hover {
+    background-color: rgba(239, 68, 68, 0.08);
+}

@@ -114,18 +114,7 @@
 
     <!-- ===== FACEBOOK MESSENGER CHAT PLUGIN ===== -->
     <div id="fb-root"></div>
-    <script>
-        window.fbAsyncInit = function () {
-            FB.init({ xfbml: true, version: 'v19.0' });
-        };
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+    <script src="/resources/client/js/layout/footer.js?v=1.5" defer></script>
 
     <div class="fb-customerchat" attribution="biz_inbox" page_id="1172919639219485" theme_color="#d4af37"
         logged_in_greeting="Xin chào! 👋 TST Watch Luxury rất vui được hỗ trợ bạn. Bạn cần tư vấn gì?"
@@ -133,67 +122,7 @@
     </div>
 
     <!-- Fallback Button -->
-    <style>
-        .messenger-fab-fallback {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
-            z-index: 9997;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: messengerPulse 2.5s infinite;
-        }
-
-        .messenger-fab-fallback:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
-            animation: none;
-        }
-
-        @keyframes messengerPulse {
-
-            0%,
-            100% {
-                box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
-            }
-
-            50% {
-                box-shadow: 0 8px 32px rgba(212, 175, 55, 0.5), 0 0 0 8px rgba(212, 175, 55, 0.1);
-            }
-        }
-
-        .messenger-fab-fallback::before {
-            content: 'Tư vấn cá nhân';
-            position: absolute;
-            right: 70px;
-            background: #11131a;
-            color: white;
-            border: 1px solid var(--border-thin);
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-family: var(--font-body);
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            box-shadow: var(--shadow-md);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .messenger-fab-fallback:hover::before {
-            opacity: 1;
-        }
-    </style>
+    <link href="/resources/client/css/layout/footer.css?v=1.5" rel="stylesheet">
 
     <a href="https://m.me/1172919639219485" target="_blank" rel="noopener noreferrer" class="messenger-fab-fallback"
         id="messengerFallbackFab" aria-label="Chat với TST Watch Luxury qua Messenger">
@@ -205,15 +134,5 @@
         </svg>
     </a>
 
-    <script>
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                const fbChat = document.querySelector('.fb_dialog');
-                const fallback = document.getElementById('messengerFallbackFab');
-                if (fbChat && fallback) {
-                    fallback.style.display = 'none';
-                }
-            }, 3500);
-        });
-    </script>
+
     <!-- ===== END MESSENGER CHAT PLUGIN ===== -->

@@ -24,38 +24,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { padding-top: 72px; }
-        
-        .cart-table th {
-            font-family: var(--font-body);
-            font-weight: 500;
-            color: var(--text-muted);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 1px solid var(--border-thin) !important;
-            padding: 16px;
-        }
-        .cart-table td {
-            padding: 24px 16px;
-            vertical-align: middle;
-            border-bottom: 1px solid var(--border-thin) !important;
-            color: var(--text-primary);
-        }
-        .cart-product-title {
-            font-family: var(--font-heading);
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: color 0.3s ease;
-        }
-        .cart-product-title:hover {
-            color: var(--gold-accent) !important;
-        }
-    </style>
+    <link href="/resources/client/css/cart/show.css?v=1.5" rel="stylesheet">
 </head>
 
 <body>
@@ -212,70 +181,6 @@
 <jsp:include page="../layout/footer.jsp" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function calculateTotal() {
-        let subtotalText = document.getElementById("subtotal").innerText;
-        let shippingText = document.getElementById("shipping").innerText;
-        
-        let subtotal = parseFloat(subtotalText.replace(/[^0-9]/g, "")) || 0;
-        let shipping = parseFloat(shippingText.replace(/[^0-9]/g, "")) || 0;
-        let total = subtotal + shipping;
-        
-        document.getElementById("total").innerText = total.toLocaleString('vi-VN') + " đ";
-    }
-
-    $(document).ready(function() {
-        calculateTotal();
-
-        // Xử lý nút giảm số lượng
-        $('.btn-minus').click(function() {
-            let input = $(this).siblings('.qty-input');
-            let val = parseInt(input.val()) || 1;
-            if (val > 1) {
-                val--;
-                updateQuantity(input, val);
-            }
-        });
-
-        // Xử lý nút tăng số lượng
-        $('.btn-plus').click(function() {
-            let input = $(this).siblings('.qty-input');
-            let val = parseInt(input.val()) || 1;
-            val++;
-            updateQuantity(input, val);
-        });
-
-        function updateQuantity(inputEl, newQty) {
-            inputEl.val(newQty);
-            
-            let price = parseFloat(inputEl.data('cart-detail-price')) || 0;
-            let index = inputEl.data('cart-detail-index');
-            let id = inputEl.data('cart-detail-id');
-            
-            // Cập nhật input ẩn trong form checkout để khi submit Spring MVC bind đúng số lượng mới
-            $('input[name="cartDetails[' + index + '].quantity"]').val(newQty);
-            
-            // Cập nhật thành tiền của dòng sản phẩm
-            let subtotalTextEl = $('span[data-cart-detail-id="' + id + '"]');
-            let newSubtotal = price * newQty;
-            subtotalTextEl.text(newSubtotal.toLocaleString('vi-VN') + " đ");
-            
-            // Tính toán lại tổng cộng giỏ hàng
-            calculateCartSubtotal();
-        }
-
-        function calculateCartSubtotal() {
-            let grandTotal = 0;
-            $('.qty-input').each(function() {
-                let qty = parseInt($(this).val()) || 0;
-                let price = parseFloat($(this).data('cart-detail-price')) || 0;
-                grandTotal += qty * price;
-            });
-            
-            $('#subtotal').text(grandTotal.toLocaleString('vi-VN') + " đ");
-            calculateTotal(); // Cập nhật lại tổng sau phí ship
-        }
-    });
-</script>
+<script src="/resources/client/js/cart/show.js?v=1.5" defer></script>
 </body>
 </html>

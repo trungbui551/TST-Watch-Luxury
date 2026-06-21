@@ -21,14 +21,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { padding-top: 72px; }
-        .profile-container-luxury {
-            max-width: 600px;
-            margin: 60px auto 80px;
-        }
-        #avatarFile { display: none; }
-    </style>
+    <link href="/resources/client/css/update/information.css?v=1.5" rel="stylesheet">
 </head>
 <body>
 
@@ -120,15 +113,6 @@
 <jsp:include page="../layout/footer.jsp" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(document).ready(() => {
-        $("#avatarFile").change(function(e) {
-            if (e.target.files && e.target.files[0]) {
-                const imgURL = URL.createObjectURL(e.target.files[0]);
-                $("#avatarPreview").attr("src", imgURL);
-            }
-        });
-    });
-</script>
+<script src="/resources/client/js/update/information.js?v=1.5" defer></script>
 </body>
 </html>

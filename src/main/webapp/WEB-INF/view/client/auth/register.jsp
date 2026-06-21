@@ -22,33 +22,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
-    <style>
-        .eye-toggle-luxury {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: var(--text-muted);
-            background: none;
-            border: none;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s ease;
-        }
-        .eye-toggle-luxury:hover {
-            color: var(--gold-accent);
-        }
-        .invalid-feedback-luxury {
-            color: #ef4444;
-            font-size: 12px;
-            margin-top: 6px;
-            display: block;
-            font-family: var(--font-body);
-            font-weight: 300;
-        }
-    </style>
+    <link href="/resources/client/css/auth/register.css?v=1.5" rel="stylesheet">
 </head>
 
 <body class="auth-body-luxury">
@@ -130,36 +104,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const btnSubmit = document.getElementById("submitBtn");
-        btnSubmit.addEventListener("click", () => {
-            alert("Cảm ơn bạn đã đăng ký tài khoản, vui lòng kiểm tra gmail để xác thực tài khoản");
-        });
-        
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const pwd = document.getElementById('password');
-            const icon = document.getElementById('eyeIcon1');
-            if (pwd.type === 'password') { 
-                pwd.type = 'text'; 
-                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-            } else { 
-                pwd.type = 'password'; 
-                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-            }
-        });
-        
-        document.getElementById('toggleRepeatPassword').addEventListener('click', function () {
-            const pwd = document.getElementById('repeatPassword');
-            const icon = document.getElementById('eyeIcon2');
-            if (pwd.type === 'password') { 
-                pwd.type = 'text'; 
-                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-            } else { 
-                pwd.type = 'password'; 
-                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-            }
-        });
-    </script>
+    <script src="/resources/client/js/auth/register.js?v=1.5" defer></script>
 </body>
 
 </html>
