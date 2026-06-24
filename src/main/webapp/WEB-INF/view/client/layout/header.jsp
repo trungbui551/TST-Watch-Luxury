@@ -9,7 +9,13 @@
             rel="stylesheet">
 
         <!-- Luxury Design System Stylesheet -->
-        <link href="/resources/client/css/luxury-theme.css?v=1.5" rel="stylesheet">
+        <link href="/resources/client/css/luxury-theme.css?v=1.9" rel="stylesheet">
+
+        <c:if test="${promoActive == 'true'}">
+            <div class="promo-announcement-bar text-center py-2 px-3 fw-bold" style="background: linear-gradient(90deg, #d4af37 0%, #f3e5ab 50%, #aa7c11 100%); color: #000000; font-family: var(--font-body); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1060;">
+                <i class="fas fa-gift me-2"></i> <c:out value="${promoText}"/>
+            </div>
+        </c:if>
 
         <nav class="navbar navbar-expand-xl sticky-top navbar-luxury px-4 py-1" id="mainNavbar">
             <div class="container" style="max-width: 1280px;">
@@ -34,9 +40,33 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <!-- Nav links -->
-                    <div class="navbar-nav ms-auto mb-2 mb-xl-0 gap-2">
+                    <div class="navbar-nav ms-auto mb-2 mb-xl-0 gap-2 align-items-xl-center">
                         <a href="/" class="nav-item nav-link nav-link-premium active">Trang chủ</a>
-                        <a href="/#san-pham" class="nav-item nav-link nav-link-premium">Sản Phẩm</a>
+                        <a href="/#san-pham" class="nav-item nav-link nav-link-premium me-xl-2">Sản Phẩm</a>
+
+                        <!-- Dropdown Dịch Vụ Cao Cấp -->
+                        <div class="nav-item dropdown">
+                            <a class="nav-link nav-link-premium dropdown-toggle d-flex align-items-center gap-1" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                                Dịch vụ cao cấp
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end border-0 p-2 mt-2" style="border-radius: var(--radius-sm); min-width: 200px; background: #06070a; border: 1px solid var(--border-thin) !important; box-shadow: var(--shadow-xl), var(--shadow-glow);" aria-labelledby="servicesDropdown">
+                                <li>
+                                    <a class="dropdown-item py-2" href="/services?tab=warranty" style="font-size: 13.5px; border-radius: var(--radius-sm);">
+                                        <i class="fas fa-shield-alt me-2" style="color: var(--gold-accent); width: 16px;"></i> Bảo hành đặc quyền
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2" href="/services?tab=spa" style="font-size: 13.5px; border-radius: var(--radius-sm);">
+                                        <i class="fas fa-magic me-2" style="color: var(--gold-accent); width: 16px;"></i> Spa đồng hồ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2" href="/services?tab=appointment" style="font-size: 13.5px; border-radius: var(--radius-sm);">
+                                        <i class="fas fa-calendar-check me-2" style="color: var(--gold-accent); width: 16px;"></i> Đặt lịch VIP
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- Actions -->
@@ -159,8 +189,9 @@
         <script>
             window.HeaderConfig = {
                 isAuthenticated: ${not empty pageContext.request.userPrincipal ? 'true' : 'false'},
+                username: "${not empty pageContext.request.userPrincipal ? pageContext.request.userPrincipal.name : 'guest'}",
                 csrfHeader: "${_csrf.headerName}",
                 csrfToken: "${_csrf.token}"
             };
         </script>
-        <script src="/resources/client/js/layout/header.js?v=1.5" defer></script>
+        <script src="/resources/client/js/layout/header.js?v=1.7" defer></script>

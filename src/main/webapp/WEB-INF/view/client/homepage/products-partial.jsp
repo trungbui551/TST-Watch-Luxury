@@ -45,9 +45,28 @@
                         <div class="d-flex align-items-center justify-content-between mt-3 pt-3"
                              style="border-top: 1px solid var(--border-thin) !important;">
                             <div class="product-price">
-                                <fmt:formatNumber type="number" value="${pro.price}"/> đ
+                                <c:choose>
+                                    <c:when test="${promoActive == 'true'}">
+                                        <span style="text-decoration: line-through; color: var(--text-muted); font-size: 13px; margin-right: 8px; font-weight: 300;">
+                                            <fmt:formatNumber type="number" value="${pro.price}"/> đ
+                                        </span>
+                                        <span style="color: var(--gold-accent); font-weight: 500;">
+                                            <fmt:formatNumber type="number" value="${pro.price * (1.0 - (promoDiscount / 100.0))}"/> đ
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber type="number" value="${pro.price}"/> đ
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
-                            <form action="/add-product-to-cart/${pro.id}" method="post" class="m-0">
+                            <form action="/add-product-to-cart/${pro.id}" method="post" class="m-0"
+                                  data-is-unique="${pro.isUnique}"
+                                  data-sizes="${pro.sizes}"
+                                  data-dial-colors="${pro.dialColors}"
+                                  data-strap-colors="${pro.strapColors}"
+                                  data-image="${pro.image}"
+                                  data-images="${pro.images}"
+                                  data-dial-colors-images="${pro.dialColorsImages}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <button type="submit" class="btn-cart-circle" title="Thêm vào giỏ hàng"
                                         aria-label="Thêm ${pro.name} vào giỏ hàng">

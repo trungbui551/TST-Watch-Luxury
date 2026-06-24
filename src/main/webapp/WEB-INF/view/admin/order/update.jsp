@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="/css/sb-admin.css?v=5.0" rel="stylesheet" />
+    <link href="/css/sb-admin.css?v=6.2" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
     <style>
@@ -234,13 +234,13 @@
                                         <div class="mb-5">
                                             <label for="statusSelect" class="luxury-form-label d-block" style="color: var(--luxury-primary);">Trạng Thái Đơn Hàng</label>
                                             <form:select class="form-select luxury-select" path="status" id="statusSelect">
-                                                <form:option value="PENDING">PENDING (Chờ xử lý)</form:option>
-                                                <form:option value="SHIPPING">SHIPPING (Đang giao hàng)</form:option>
-                                                <form:option value="DELIVERED">DELIVERED (Hoàn tất)</form:option>
-                                                <form:option value="CANCELLED">CANCELLED (Đã hủy)</form:option>
-                                                <form:option value=" Đang xử lý">Đang xử lý (Tiếng Việt)</form:option>
-                                                <form:option value="Hoàn tất">Hoàn tất (Tiếng Việt)</form:option>
-                                                <form:option value="Đã hủy">Đã hủy (Tiếng Việt)</form:option>
+                                                <form:option value="PENDING">Chờ xử lý</form:option>
+                                                <form:option value="SHIPPING">Đang giao hàng</form:option>
+                                                <form:option value="DELIVERED">Hoàn tất</form:option>
+                                                <form:option value="CANCELLED">Đã hủy</form:option>
+                                                <form:option value=" Đang xử lý">Đang xử lý</form:option>
+                                                <form:option value="Hoàn tất">Hoàn tất</form:option>
+                                                <form:option value="Đã hủy">Đã hủy</form:option>
                                             </form:select>
                                         </div>
 

@@ -57,6 +57,17 @@ public class Product {
     private String factory;
     private String target;
 
+    @Column(name = "is_unique")
+    private Boolean isUnique = false;
+
+    private String dialColors;
+    private String strapColors;
+    private String sizes;
+    private String dialColorsImages;
+
+    @Column(name = "active", nullable = false, columnDefinition = "bit(1) default 1")
+    private boolean active = true;
+
     @OneToMany(mappedBy = "product")
     private List<CartDetail> cartDetail;
     @OneToMany(mappedBy = "product")
@@ -172,5 +183,62 @@ public class Product {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public boolean getIsUnique() {
+        return isUnique != null && isUnique;
+    }
+
+    public void setIsUnique(Boolean isUnique) {
+        this.isUnique = isUnique;
+    }
+
+    public String getDialColors() {
+        if (dialColors == null || dialColors.trim().isEmpty()) {
+            return "Gold,Silver,Rose Gold,Black";
+        }
+        return dialColors;
+    }
+
+    public void setDialColors(String dialColors) {
+        this.dialColors = dialColors;
+    }
+
+    public String getStrapColors() {
+        if (strapColors == null || strapColors.trim().isEmpty()) {
+            return "Gold,Silver,Rose Gold,Black";
+        }
+        return strapColors;
+    }
+
+    public void setStrapColors(String strapColors) {
+        this.strapColors = strapColors;
+    }
+
+    public String getSizes() {
+        if (sizes == null || sizes.trim().isEmpty()) {
+            return "40mm,42mm,38mm,36mm";
+        }
+        return sizes;
+    }
+
+    public void setSizes(String sizes) {
+        this.sizes = sizes;
+    }
+
+    public String getDialColorsImages() {
+        return dialColorsImages;
+    }
+
+    public void setDialColorsImages(String dialColorsImages) {
+        this.dialColorsImages = dialColorsImages;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

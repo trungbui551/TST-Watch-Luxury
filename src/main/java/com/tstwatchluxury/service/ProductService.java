@@ -62,7 +62,7 @@ public class ProductService {
         return this.productRepository.findById(id);
     }
 
-    public void handleAddProductToCart(String email, Long proId, HttpSession session) {
+    public void handleAddProductToCart(String email, Long proId, String size, String color, long quantity, HttpSession session) {
         User user = this.userService.getUserByEmail(email);
         if (user != null) {
             // check user da co cart hay chua
@@ -83,21 +83,28 @@ public class ProductService {
             Optional<Product> productOp = this.productRepository.findById(proId);
             if (productOp.isPresent()) {
                 Product product = productOp.get();
+                
+                String finalSize = (size == null || size.trim().isEmpty()) ? "Standard" : size;
+                String finalColor = (color == null || color.trim().isEmpty()) ? "Standard" : color;
+                long finalQty = quantity > 0 ? quantity : 1;
+
                 // check san pham da tung duoc them vao gio hang day hay chua
-                CartDetail oldCartDetail = this.cartDetailRepository.findByCartAndProduct(cart, product);
+                CartDetail oldCartDetail = this.cartDetailRepository.findByCartAndProductAndSizeAndColor(cart, product, finalSize, finalColor);
                 if (oldCartDetail == null) {
                     oldCartDetail = new CartDetail();
                     oldCartDetail.setCart(cart);
                     oldCartDetail.setProduct(product);
                     oldCartDetail.setPrice(product.getPrice());
-                    oldCartDetail.setQuantity(1);
+                    oldCartDetail.setQuantity(finalQty);
+                    oldCartDetail.setSize(finalSize);
+                    oldCartDetail.setColor(finalColor);
                     int s = cart.getSum() + 1;
                     cart.setSum(s);
                     this.cartRepository.save(cart);
                     this.cartDetailRepository.save(oldCartDetail);
                     session.setAttribute("sum", s);
                 } else {
-                    oldCartDetail.setQuantity(oldCartDetail.getQuantity() + 1);
+                    oldCartDetail.setQuantity(oldCartDetail.getQuantity() + finalQty);
                     this.cartDetailRepository.save(oldCartDetail);
                 }
 
@@ -178,6 +185,8 @@ public class ProductService {
                     orderDetail.setProduct(cartDetail.getProduct());
                     orderDetail.setPrice(cartDetail.getPrice());
                     orderDetail.setQuantity(cartDetail.getQuantity());
+                    orderDetail.setSize(cartDetail.getSize());
+                    orderDetail.setColor(cartDetail.getColor());
                     Product product = orderDetail.getProduct();
                     product.setSold(product.getSold() + orderDetail.getQuantity());
                     long newQty = product.getQuantity() - orderDetail.getQuantity();
@@ -253,6 +262,18 @@ public class ProductService {
     }
 
     public void deleteProduct(long id) {
-        this.productRepository.deleteById(id);
+        Product p = this.productRepository.findById(id);
+        if (p != null) {
+            p.setActive(false);
+            this.productRepository.save(p);
+        }
+    }
+
+    public void restoreProduct(long id) {
+        Product p = this.productRepository.findById(id);
+        if (p != null) {
+            p.setActive(true);
+            this.productRepository.save(p);
+        }
     }
 }

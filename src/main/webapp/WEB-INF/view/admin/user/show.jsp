@@ -14,7 +14,7 @@
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
                     crossorigin="anonymous">
-                <link href="/css/sb-admin.css?v=5.0" rel="stylesheet" />
+                <link href="/css/sb-admin.css?v=6.2" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
 
@@ -23,50 +23,63 @@
                 <div id="layoutSidenav">
                     <jsp:include page="../layout/sidebar.jsp" />
                     <div id="layoutSidenav_content">
-                        <h1>Manager User</h1>
-
-
-                        <div class="container mt-5">
-                            <div class="row">
-                                <div class="col-12 mx-auto">
-                                    <div class="d-flex justify-content-between">
-                                        <h3>Table Users</h3>
-                                        <a href="/admin/user/create" class="btn btn-primary">Create an User</a>
+                        <main>
+                            <div class="container-fluid px-4 py-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h1 class="h3 mb-0 text-gray-800" style="padding-left: 0 !important; margin: 0 !important;">Quản lý người dùng</h1>
+                                        <ol class="breadcrumb mb-0 mt-1">
+                                            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">Quản lý người dùng</li>
+                                        </ol>
                                     </div>
-                                    <hr />
-                                    <table class="table table-hover table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Full Name</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col" style="width: 250px;">Actions</th>
-                                            </tr>
+                                </div>
 
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="user" items="${users1}">
-                                                <tr>
-                                                    <td>${user.id}</td>
-                                                    <td>${user.email}</td>
-                                                    <td>${user.fullName}</td>
-                                                    <td>${user.role.name}</td>
-                                                    <td class="text-nowrap">
-                                                        <a href="/admin/user/${user.id}"
-                                                            class="btn btn-success">View</a>
-                                                         <a href="/admin/user/update/${user.id}"
-                                                             class="btn btn-warning mx-2">Update</a>
-                                                         <button type="button" class="btn btn-danger btn-delete-user" data-id="${user.id}" data-email="${user.email}" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
-                                                     </td>
-                                                 </tr>
-                                             </c:forEach>
-                                         </tbody>
-                                     </table>
-                                 </div>
-                             </div>
-
-                         </div>
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #f8f9fa; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 18px 24px;">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-users me-2 text-gold"></i>
+                                            <span class="fw-bold text-gold" style="letter-spacing: 0.03em;">DANH SÁCH NGƯỜI DÙNG</span>
+                                        </div>
+                                        <a href="/admin/user/create" class="btn btn-primary">
+                                            <i class="fas fa-user-plus me-1"></i> Thêm người dùng
+                                        </a>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0" style="border: none !important; border-radius: 0 !important; margin-top: 0 !important; box-shadow: none !important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Full Name</th>
+                                                        <th scope="col">Role</th>
+                                                        <th scope="col" style="width: 250px;">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="user" items="${users1}">
+                                                        <tr>
+                                                            <td>${user.id}</td>
+                                                            <td>${user.email}</td>
+                                                            <td>${user.fullName}</td>
+                                                            <td>${user.role.name}</td>
+                                                            <td class="text-nowrap">
+                                                                <a href="/admin/user/${user.id}"
+                                                                    class="btn btn-success">View</a>
+                                                                 <a href="/admin/user/update/${user.id}"
+                                                                     class="btn btn-warning text-white mx-2">Update</a>
+                                                                 <button type="button" class="btn btn-danger btn-delete-user" data-id="${user.id}" data-email="${user.email}" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
                          
                          <!-- Modal xác nhận xóa User -->
                          <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
@@ -84,12 +97,12 @@
                                          </div>
                                          <p class="text-danger mb-0 small"><i class="fas fa-info-circle me-1"></i>Hành động này không thể hoàn tác!</p>
                                      </div>
-                                     <div class="modal-footer" style="background-color: #f8fafc; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; border-top: 1px solid rgba(0,0,0,0.06);">
-                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: #e2e8f0; color: #475569;">Hủy bỏ</button>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
                                          <form id="deleteUserForm" action="/admin/user/delete" method="post" style="margin: 0;">
                                              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                              <input type="hidden" name="id" id="deleteUserIdInput" />
-                                             <button type="submit" class="btn btn-danger" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">Xác nhận xóa</button>
+                                             <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
                                          </form>
                                      </div>
                                  </div>

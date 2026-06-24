@@ -60,17 +60,33 @@ public class OrderController {
     @GetMapping("/revenue-data")
     @ResponseBody
     public Map<String, Object> getRevenueData() {
-        Map data = new HashMap<>();
-        List<String> lables = new ArrayList<>();
+        Map<String, Object> data = new HashMap<>();
+        List<String> labels = new ArrayList<>();
         List<Double> revenue = new ArrayList<>();
         List<Object[]> ob = this.orderService.getRevenueByMonth();
         for (Object[] o : ob) {
-            lables.add(o[0].toString());
+            labels.add(o[0].toString());
             revenue.add(((Number) o[1]).doubleValue());
         }
-        data.put("labels", lables);
+        data.put("labels", labels);
         data.put("value", revenue);
         System.out.println(data.toString());
+        return data;
+    }
+
+    @GetMapping("/revenue-by-day")
+    @ResponseBody
+    public Map<String, Object> getRevenueByDay() {
+        Map<String, Object> data = new HashMap<>();
+        List<String> labels = new ArrayList<>();
+        List<Double> revenue = new ArrayList<>();
+        List<Object[]> ob = this.orderService.getRevenueByDay();
+        for (Object[] o : ob) {
+            labels.add(o[0].toString());
+            revenue.add(((Number) o[1]).doubleValue());
+        }
+        data.put("labels", labels);
+        data.put("value", revenue);
         return data;
     }
 

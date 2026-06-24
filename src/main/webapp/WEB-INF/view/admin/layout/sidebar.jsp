@@ -21,6 +21,14 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
                     Quản lý Sản phẩm
                 </a>
+                <a class="nav-link" href="<%=request.getContextPath() %>/admin/appointment">
+                    <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
+                    Quản lý Lịch hẹn VIP
+                </a>
+                <a class="nav-link" href="<%=request.getContextPath() %>/admin/settings">
+                    <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+                    Cấu hình hệ thống
+                </a>
 
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                     data-bs-parent="#sidenavAccordion">
@@ -65,3 +73,26 @@
         </div>
     </nav>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentPath = window.location.pathname;
+        var navLinks = document.querySelectorAll("#sidenavAccordion .nav-link");
+        navLinks.forEach(function(link) {
+            var href = link.getAttribute("href");
+            if (href) {
+                // Remove trailing slashes for comparison
+                var cleanHref = href.replace(/\/$/, "");
+                var cleanPath = currentPath.replace(/\/$/, "");
+                
+                if (cleanHref === "/admin" || cleanHref === "<%=request.getContextPath()%>/admin") {
+                    if (cleanPath === "/admin" || cleanPath === "/admin/") {
+                        link.classList.add("active");
+                    }
+                } else if (cleanHref !== "" && cleanPath.startsWith(cleanHref)) {
+                    link.classList.add("active");
+                }
+            }
+        });
+    });
+</script>

@@ -19,6 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findById(long id);
 
     @Query("SELECT p FROM Product p WHERE " +
+           "p.active = true AND " +
            "(:factory IS NULL OR p.factory = :factory) AND " +
            "(:target IS NULL OR p.target = :target) AND " +
            "(:minPrice IS NULL OR p.price >= :minPrice) AND " +

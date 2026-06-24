@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link href="/resources/client/css/luxury-theme.css?v=1.5" rel="stylesheet">
+    <link href="/resources/client/css/luxury-theme.css?v=1.9" rel="stylesheet">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -70,20 +70,31 @@
                                 </c:otherwise>
                             </c:choose>
                         </h5>
+                        <c:if test="${not empty order.formattedOrderDate}">
+                            <div style="font-size: 12px; color: var(--text-muted); font-family: var(--font-body); font-weight: 300; margin-top: 4px;">
+                                <i class="far fa-calendar-alt me-1" style="color: var(--gold-accent);"></i> Ngày đặt: ${order.formattedOrderDate}
+                            </div>
+                        </c:if>
                     </div>
                     <div>
+                        <c:set var="statusTrim" value="${order.status.trim()}" />
                         <c:choose>
-                            <c:when test="${order.status == ' Đang xử lý'}">
+                            <c:when test="${statusTrim == 'PENDING' || statusTrim == 'Đang xử lý'}">
                                 <span style="background: rgba(212, 175, 55, 0.05); color: var(--gold-accent); border: 1px solid var(--border-thin); padding: 6px 16px; border-radius: var(--radius-sm); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-body); font-weight: 400;">
                                     Đang xử lý
                                 </span>
                             </c:when>
-                            <c:when test="${order.status == 'Hoàn tất'}">
+                            <c:when test="${statusTrim == 'SHIPPING' || statusTrim == 'Đang giao hàng'}">
+                                <span style="background: rgba(37,99,235,0.05); color: #3b82f6; border: 1px solid rgba(37,99,235,0.2); padding: 6px 16px; border-radius: var(--radius-sm); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-body); font-weight: 400;">
+                                    Đang giao hàng
+                                </span>
+                            </c:when>
+                            <c:when test="${statusTrim == 'DELIVERED' || statusTrim == 'Hoàn tất'}">
                                 <span style="background: rgba(16,185,129,0.05); color: #10b981; border: 1px solid rgba(16,185,129,0.2); padding: 6px 16px; border-radius: var(--radius-sm); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-body); font-weight: 400;">
                                     Hoàn tất
                                 </span>
                             </c:when>
-                            <c:when test="${order.status == 'Đã hủy'}">
+                            <c:when test="${statusTrim == 'CANCELLED' || statusTrim == 'Đã hủy'}">
                                 <span style="background: rgba(239,68,68,0.05); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 6px 16px; border-radius: var(--radius-sm); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-body); font-weight: 400;">
                                     Đã hủy
                                 </span>
@@ -110,31 +121,164 @@
                                 <div style="font-size: 12px; color: var(--text-muted); font-family: var(--font-body); font-weight: 300;">Số lượng: x${p.quantity}</div>
                             </div>
                         </div>
-                        <div style="font-weight: 400; color: var(--text-primary); font-family: var(--font-body);">
-                            <fmt:formatNumber type="number" value="${p.price}"/> đ
+                        <div class="d-flex flex-column align-items-end gap-2">
+                            <div style="font-weight: 400; color: var(--text-primary); font-family: var(--font-body);">
+                                <fmt:formatNumber type="number" value="${p.price}"/> đ
+                            </div>
+                            <c:if test="${order.status == 'Hoàn tất'}">
+                                <button type="button" class="btn btn-history-review" 
+                                        data-product-id="${p.product.id}"
+                                        data-product-name="${p.product.name}"
+                                        data-product-image="${p.product.image}"
+                                        style="font-size: 11px; padding: 4px 12px; border-radius: var(--radius-sm); letter-spacing: 0.5px; text-transform: uppercase; font-weight: 300; border: 1px solid rgba(212,175,55,0.4); color: var(--gold-accent); background: transparent; cursor: pointer; transition: all 0.3s ease;">
+                                    <i class="far fa-star me-1"></i> Đánh giá
+                                </button>
+                            </c:if>
                         </div>
                     </div>
                 </c:forEach>
+ 
+                 <!-- Order Total -->
+                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
+                     <span style="color: var(--text-muted); font-size: 13px; font-family: var(--font-body); font-weight: 300; text-transform: uppercase; letter-spacing: 1px;">Tổng đơn hàng</span>
+                     <span style="font-weight: 400; font-size: 1.2rem; color: var(--gold-accent); font-family: var(--font-body);">
+                         <fmt:formatNumber type="number" value="${order.totalPrice}"/> đ
+                     </span>
+                 </div>
+             </div>
+         </c:forEach>
+     </div>
+ 
+     <div class="text-center mt-5">
+         <a href="/" class="btn-luxury-action" style="width: auto; padding: 14px 36px !important;">
+             Quay lại trang chủ
+         </a>
+     </div>
+ </div>
+ 
+ <jsp:include page="../layout/footer.jsp" />
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-                <!-- Order Total -->
-                <div class="d-flex justify-content-between align-items-center mt-4 pt-3">
-                    <span style="color: var(--text-muted); font-size: 13px; font-family: var(--font-body); font-weight: 300; text-transform: uppercase; letter-spacing: 1px;">Tổng đơn hàng</span>
-                    <span style="font-weight: 400; font-size: 1.2rem; color: var(--gold-accent); font-family: var(--font-body);">
-                        <fmt:formatNumber type="number" value="${order.totalPrice}"/> đ
-                    </span>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+ <!-- Review Modal -->
+ <div class="modal fade" id="historyReviewModal" tabindex="-1" aria-labelledby="historyReviewModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content modal-content-luxury">
+             <div class="modal-header border-0 pb-0">
+                 <h5 class="modal-title" id="historyReviewModalLabel" style="font-family: var(--font-heading); text-transform: uppercase; color: var(--gold-accent); font-size: 18px; letter-spacing: 1.5px;">Đánh giá sản phẩm</h5>
+                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body py-4">
+                 <!-- Product Preview -->
+                 <div class="d-flex align-items-center gap-3 mb-4 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-thin); border-radius: var(--radius-sm);">
+                     <div style="width: 50px; height: 50px; padding: 4px; border: 1px solid var(--border-thin); border-radius: 4px; display: flex; align-items: center; justify-content: center; background: #06070a;">
+                         <img id="modalReviewProductImg" src="" style="max-width: 100%; max-height: 100%; object-fit: contain;" alt="Product">
+                     </div>
+                     <div>
+                         <h6 id="modalReviewProductTitle" style="font-family: var(--font-heading); color: #ffffff; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;"></h6>
+                     </div>
+                 </div>
 
-    <div class="text-center mt-5">
-        <a href="/" class="btn-luxury-action" style="width: auto; padding: 14px 36px !important;">
-            Quay lại trang chủ
-        </a>
-    </div>
-</div>
+                 <form id="modalReviewForm" method="post" action="">
+                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                     <input type="hidden" name="redirectUrl" value="/client/history/{userId}"/>
+                     
+                     <!-- Guest inputs fallback defaults -->
+                     <input type="hidden" name="name" value="User"/>
+                     <input type="hidden" name="email" value="user@tst.com"/>
 
-<jsp:include page="../layout/footer.jsp" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                     <!-- Star selection -->
+                     <div class="mb-4">
+                          <style>
+                              .modal-star-item.star-filled { color: var(--gold-accent) !important; }
+                              .modal-star-item.star-empty { color: rgba(255, 255, 255, 0.2) !important; }
+                          </style>
+                         <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Đánh giá của bạn (Chọn số sao)</div>
+                         <div class="d-flex gap-2" id="modalReviewStarSelector">
+                             <i class="fa fa-star star-filled modal-star-item" data-value="1" style="font-size: 20px; cursor: pointer;"></i>
+                             <i class="fa fa-star star-filled modal-star-item" data-value="2" style="font-size: 20px; cursor: pointer;"></i>
+                             <i class="fa fa-star star-filled modal-star-item" data-value="3" style="font-size: 20px; cursor: pointer;"></i>
+                             <i class="fa fa-star star-filled modal-star-item" data-value="4" style="font-size: 20px; cursor: pointer;"></i>
+                             <i class="fa fa-star star-filled modal-star-item" data-value="5" style="font-size: 20px; cursor: pointer;"></i>
+                         </div>
+                         <input type="hidden" name="rating" id="modalReviewRatingInput" value="5" />
+                     </div>
+
+                     <!-- Content -->
+                     <div class="mb-4">
+                         <label for="modalReviewContent" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Nội dung cảm nhận</label>
+                         <textarea id="modalReviewContent" name="content" class="form-control" rows="4"
+                                   style="background: transparent; border-radius: var(--radius-sm); border: 1px solid var(--border-thin); color: white;"
+                                   placeholder="Hãy chia sẻ trải nghiệm thực tế của bạn với sản phẩm..." required></textarea>
+                     </div>
+
+                     <button type="submit" class="btn-luxury-action">
+                         Gửi Đánh Giá
+                     </button>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         // Modal initialization
+         const reviewModalEl = document.getElementById('historyReviewModal');
+         let reviewModal = null;
+         if (reviewModalEl && typeof bootstrap !== 'undefined') {
+             reviewModal = new bootstrap.Modal(reviewModalEl);
+         }
+
+         // Click review button
+         const reviewButtons = document.querySelectorAll('.btn-history-review');
+         const modalForm = document.getElementById('modalReviewForm');
+         const modalImg = document.getElementById('modalReviewProductImg');
+         const modalTitle = document.getElementById('modalReviewProductTitle');
+
+         reviewButtons.forEach(btn => {
+             btn.addEventListener('click', function() {
+                 const productId = btn.getAttribute('data-product-id');
+                 const productName = btn.getAttribute('data-product-name');
+                 const productImage = btn.getAttribute('data-product-image');
+
+                 if (modalForm) {
+                     modalForm.setAttribute('action', '/product/' + productId + '/review');
+                 }
+                 if (modalTitle) {
+                     modalTitle.textContent = productName;
+                 }
+                 if (modalImg) {
+                     modalImg.src = '/images/product/' + productImage;
+                 }
+                 if (reviewModal) {
+                     reviewModal.show();
+                 }
+             });
+         });
+
+         // Star rating click handler inside modal
+         const starSelector = document.getElementById('modalReviewStarSelector');
+         const ratingInput = document.getElementById('modalReviewRatingInput');
+         if (starSelector && ratingInput) {
+             const starItems = starSelector.querySelectorAll('.modal-star-item');
+             starItems.forEach(item => {
+                 item.addEventListener('click', function() {
+                     const val = parseInt(item.getAttribute('data-value'), 10);
+                     ratingInput.value = val;
+                     starItems.forEach(s => {
+                         const sVal = parseInt(s.getAttribute('data-value'), 10);
+                         if (sVal <= val) {
+                             s.classList.remove('star-empty');
+                             s.classList.add('star-filled');
+                         } else {
+                             s.classList.remove('star-filled');
+                             s.classList.add('star-empty');
+                         }
+                     });
+                 });
+             });
+         }
+     });
+ </script>
 </body>
 </html>

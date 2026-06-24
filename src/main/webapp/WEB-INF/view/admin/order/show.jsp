@@ -14,7 +14,7 @@
                 <title>Dashboard</title>
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="/css/sb-admin.css?v=5.0" rel="stylesheet" />
+    <link href="/css/sb-admin.css?v=6.2" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
 
@@ -24,80 +24,104 @@
                     <jsp:include page="../layout/sidebar.jsp" />
                     <div id="layoutSidenav_content">
                         <main>
-                            <div class="container-fluid px-4">
-                                <h1 class="mt-4">Order Page</h1>
-                            </div>
-                            <hr />
-                            <div class="container mt-5">
-                                <div class="row">
-                                    <div class="col-12 mx-auto">
-                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                             <h3>Order Table</h3>
-                                             <form action="/admin/order" method="GET" class="d-flex" style="max-width: 400px; width: 100%;">
-                                                 <div class="input-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
-                                                     <input type="text" class="form-control border-end-0 py-2 px-3" name="search" placeholder="Tìm kiếm theo mã đơn..." value="${search}" aria-label="Search order code" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
-                                                     <c:if test="${not empty search}">
-                                                         <a href="/admin/order" class="btn btn-light border-top border-bottom d-flex align-items-center text-muted px-2" title="Xóa tìm kiếm" style="border-left: none; border-right: none;">
-                                                             <i class="fas fa-times"></i>
-                                                         </a>
-                                                     </c:if>
-                                                     <button class="btn btn-primary px-3 py-2 fw-semibold" type="submit" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">
-                                                         <i class="fas fa-search me-1"></i> Tìm
-                                                     </button>
-                                                 </div>
-                                             </form>
-                                         </div>
-                                        <hr />
-                                        <table class="table table-hover table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Mã Đơn Hàng</th>
-                                                    <th scope="col">Địa Chỉ Người Nhận</th>
-                                                    <th scope="col">Tên Người Nhận </th>
-                                                    <th scope="col">Số Điện Thoại</th>
-                                                    <th scope="col">Trạng Thái</th>
-                                                    <th scope="col">Gía Trị Đơn Hàng</th>
-                                                    <th scope="col" style="width: 250px;">Actions</th>
-                                                </tr>
+                            <div class="container-fluid px-4 py-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h1 class="h3 mb-0 text-gray-800" style="padding-left: 0 !important; margin: 0 !important;">Quản lý đơn hàng</h1>
+                                        <ol class="breadcrumb mb-0 mt-1">
+                                            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                            <li class="breadcrumb-item active">Quản lý đơn hàng</li>
+                                        </ol>
+                                    </div>
+                                </div>
 
-                                            </thead>
-                                            <tbody>
-
-                                                <c:forEach var="order" items="${orders}">
-                                                    <tr>
-                                                        <td>${order.id}</td>
-                                                        <td class="text-primary font-monospace fw-bold">${order.orderCode}</td>
-                                                        <td>${order.receiverAddress}</td>
-                                                        <td>${order.receiverName}</td>
-                                                        <td>${order.receiverPhone}</td>
-                                                         <td>
-                                                             <span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span>
-                                                         </td>
-                                                        <td>
-                                                            <fmt:formatNumber type="number"
-                                                                value="${order.totalPrice}" /> đ
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="/admin/order/${order.id}"
-                                                                class="btn btn-success">View</a>
-                                                            <a href="/admin/order/update/${order.id}"
-                                                                class="btn btn-warning mx-2">Update</a>
-                                                            <button type="button" class="btn btn-danger btn-delete-order" data-id="${order.id}" data-code="${order.orderCode}" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                                <c:if test="${empty orders}">
-                                                    <tr>
-                                                        <td colspan="8" class="text-center py-5 text-muted bg-light">
-                                                            <i class="fas fa-box-open fa-3x mb-3 d-block text-secondary"></i>
-                                                            <span class="fs-6 fw-semibold">Không tìm thấy đơn hàng nào khớp với từ khóa tìm kiếm.</span>
-                                                            <p class="small text-muted mb-0 mt-1">Vui lòng thử lại với mã đơn hàng khác.</p>
-                                                        </td>
-                                                    </tr>
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3" style="background-color: #f8f9fa; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 18px 24px;">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-shopping-cart me-2 text-gold"></i>
+                                            <span class="fw-bold text-gold" style="letter-spacing: 0.03em;">DANH SÁCH ĐƠN HÀNG</span>
+                                        </div>
+                                        <form action="/admin/order" method="GET" class="d-flex" style="max-width: 350px; width: 100%;">
+                                            <div class="input-group shadow-sm" style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.25);">
+                                                <input type="text" class="form-control border-0 py-2 px-3" name="search" placeholder="Tìm kiếm mã đơn..." value="${search}" aria-label="Search order code" style="font-size: 13.5px;">
+                                                <c:if test="${not empty search}">
+                                                    <a href="/admin/order" class="btn btn-light bg-white border-0 d-flex align-items-center text-muted px-2" title="Xóa tìm kiếm">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
                                                 </c:if>
-                                            </tbody>
-                                        </table>
+                                                <button class="btn btn-primary px-3 py-2 fw-semibold" type="submit">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0" style="border: none !important; border-radius: 0 !important; margin-top: 0 !important; box-shadow: none !important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Mã Đơn Hàng</th>
+                                                        <th scope="col">Địa Chỉ Người Nhận</th>
+                                                        <th scope="col">Tên Người Nhận</th>
+                                                        <th scope="col">Số Điện Thoại</th>
+                                                        <th scope="col">Trạng Thái</th>
+                                                        <th scope="col">Gía Trị Đơn Hàng</th>
+                                                        <th scope="col" style="width: 250px;">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="order" items="${orders}">
+                                                        <tr>
+                                                            <td>${order.id}</td>
+                                                            <td class="text-primary font-monospace fw-bold">${order.orderCode}</td>
+                                                            <td>${order.receiverAddress}</td>
+                                                            <td>${order.receiverName}</td>
+                                                            <td>${order.receiverPhone}</td>
+                                                            <td>
+                                                                <c:set var="statusTrim" value="${order.status.trim()}" />
+                                                                <c:choose>
+                                                                    <c:when test="${statusTrim == 'PENDING' || statusTrim == 'Đang xử lý'}">
+                                                                        <span class="status-badge status-pending">Đang xử lý</span>
+                                                                    </c:when>
+                                                                    <c:when test="${statusTrim == 'SHIPPING' || statusTrim == 'Đang giao hàng'}">
+                                                                        <span class="status-badge status-shipped">Đang giao hàng</span>
+                                                                    </c:when>
+                                                                    <c:when test="${statusTrim == 'DELIVERED' || statusTrim == 'Hoàn tất'}">
+                                                                        <span class="status-badge status-completed">Hoàn tất</span>
+                                                                    </c:when>
+                                                                    <c:when test="${statusTrim == 'CANCELLED' || statusTrim == 'Đã hủy'}">
+                                                                        <span class="status-badge status-cancelled">Đã hủy</span>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <span class="status-badge">${order.status}</span>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                            <td>
+                                                                <fmt:formatNumber type="number" value="${order.totalPrice}" /> đ
+                                                            </td>
+                                                            <td class="text-nowrap">
+                                                                <a href="/admin/order/${order.id}"
+                                                                    class="btn btn-success">View</a>
+                                                                <a href="/admin/order/update/${order.id}"
+                                                                    class="btn btn-warning text-white mx-2">Update</a>
+                                                                <button type="button" class="btn btn-danger btn-delete-order" data-id="${order.id}" data-code="${order.orderCode}" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    <c:if test="${empty orders}">
+                                                        <tr>
+                                                            <td colspan="8" class="text-center py-5">
+                                                                <i class="fas fa-box-open fa-3x mb-3 d-block text-secondary"></i>
+                                                                <span class="fs-6 fw-semibold">Không tìm thấy đơn hàng nào khớp với từ khóa tìm kiếm.</span>
+                                                                <p class="small text-muted mb-0 mt-1">Vui lòng thử lại với mã đơn hàng khác.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -119,12 +143,12 @@
                                         </div>
                                         <p class="text-danger mb-0 small"><i class="fas fa-info-circle me-1"></i>Hành động này không thể hoàn tác!</p>
                                     </div>
-                                    <div class="modal-footer" style="background-color: #f8fafc; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; border-top: 1px solid rgba(0,0,0,0.06);">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: #e2e8f0; color: #475569;">Hủy bỏ</button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
                                         <form id="deleteOrderForm" action="/admin/order/delete" method="post" style="margin: 0;">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <input type="hidden" name="id" id="deleteOrderIdInput" />
-                                            <button type="submit" class="btn btn-danger" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">Xác nhận xóa</button>
+                                            <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
                                         </form>
                                     </div>
                                 </div>

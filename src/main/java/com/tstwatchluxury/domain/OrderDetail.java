@@ -16,6 +16,8 @@ public class OrderDetail {
     private long id;
     private long quantity;
     private double price;
+    private String size;
+    private String color;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -64,4 +66,19 @@ public class OrderDetail {
         this.product = product;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

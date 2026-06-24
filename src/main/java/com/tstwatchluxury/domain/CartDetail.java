@@ -20,6 +20,8 @@ public class CartDetail {
     private long id;
     private long quantity;
     private double price;
+    private String size;
+    private String color;
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Cart cart;

@@ -16,7 +16,7 @@
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
                 <!-- Luxury Design System Stylesheet -->
-                <link href="/resources/client/css/luxury-theme.css?v=1.5" rel="stylesheet">
+                <link href="/resources/client/css/luxury-theme.css?v=1.9" rel="stylesheet">
 
                 <!-- Bootstrap 5 -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

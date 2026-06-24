@@ -33,7 +33,7 @@
   --color-text-secondary: #c8c8cc;
   --color-text-muted: var(--text-muted);
 
-  --font-heading: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
+  --font-heading: 'Montserrat', 'Playfair Display', 'Inter', sans-serif;
   --font-body: 'Inter', 'Montserrat', sans-serif;
 
   /* Premium Depth & Glow */
@@ -81,6 +81,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums !important;
+  font-feature-settings: "lnum" 1 !important;
 }
 
 p, span, a, input, select, button {
@@ -382,16 +384,60 @@ footer {
   color: #0b0c10 !important;
 }
 
-/* Toast alert styling */
+/* Premium Floating Toast Notification System */
+.toast-container-custom {
+  position: fixed;
+  top: 90px; /* Sits cleanly below sticky navbar */
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
 .toast-premium {
-  background: #161821 !important;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 320px;
+  max-width: 420px;
+  padding: 16px 20px;
+  background: rgba(17, 19, 26, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid var(--border-thin) !important;
   border-left: 4px solid var(--gold-accent) !important;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xl), 0 10px 30px rgba(212, 175, 55, 0.05);
   color: var(--text-primary) !important;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
 }
 
 .toast-premium i {
   color: var(--gold-accent) !important;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.toast-premium span {
+  flex-grow: 1;
+  line-height: 1.4;
+}
+
+/* Slide and Bounce entry animation helper classes */
+.toast-premium.toast-anim {
+  opacity: 0;
+  transform: translateX(40px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.toast-premium.toast-anim.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
 }
 
 /* Loading Spinner */
@@ -1185,4 +1231,144 @@ footer {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ==========================================================================
+   10. GLOBAL ADD TO CART MODAL (LUXURY STYLE)
+   ========================================================================== */
+.modal-content-luxury {
+  background: radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 40%), #11131a !important;
+  border: 1px solid var(--border-thin) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-xl), var(--shadow-glow-strong) !important;
+  color: var(--text-primary) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Unified Global Size Selection Pills */
+.btn-size-pill {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-thin);
+  color: var(--text-secondary);
+  padding: 10px 24px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-size-pill:hover {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+.btn-size-pill.active {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+  background: rgba(212, 175, 55, 0.08);
+  font-weight: 500;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+.btn-size-pill.active::after {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--gold-accent);
+  color: #000;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 1px 4px;
+  border-bottom-left-radius: 4px;
+  line-height: 1;
+}
+
+/* Modal specific sizing for pills (slightly smaller to fit modal viewport nicely) */
+.modal-content-luxury .btn-size-pill {
+  padding: 8px 18px;
+  font-size: 12px;
+}
+.modal-content-luxury .btn-size-pill.active::after {
+  font-size: 8px;
+  padding: 1px 3px;
+}
+
+/* Unified Global Color Swatches */
+.btn-color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-color-swatch:hover {
+  transform: scale(1.15);
+}
+.btn-color-swatch.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px var(--gold-accent);
+  transform: scale(1.1);
+}
+
+/* Error message styling */
+.size-error-msg {
+  display: none;
+  font-size: 12px;
+  color: #f87171;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+  animation: fadeIn 0.3s ease;
+}
+.size-error-msg.show {
+  display: block;
+}
+
+/* Shake animation for validation feedback */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.shake-anim {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Modal Backdrop & Dialog Enhancements */
+.modal-backdrop {
+  background-color: #000000 !important;
+}
+.modal-backdrop.show {
+  opacity: 0.65 !important;
+}
+.modal.fade.show {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  transition: backdrop-filter 0.3s ease !important;
+}
+.modal-content-luxury .btn-close-white {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: invert(1) grayscale(1) brightness(2);
+}
+.modal-content-luxury .btn-close-white:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* 21. Editorial serif override for main section banners and slogans */
+.luxury-hero-title, .services-title {
+  font-family: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif !important;
 }

@@ -120,4 +120,11 @@ public class Order {
         this.orderCode = orderCode;
     }
 
+    public String getFormattedOrderDate() {
+        if (this.orderDate == null) {
+            return "";
+        }
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+        return this.orderDate.format(formatter);
+    }
 }

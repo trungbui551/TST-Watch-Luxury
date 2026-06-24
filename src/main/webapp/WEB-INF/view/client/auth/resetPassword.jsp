@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tạo mật khẩu mới tại RoyalWatch.">
-    <title>Đặt Lại Mật Khẩu - LapTopShop</title>
+    <meta name="description" content="Tạo mật khẩu mới tại TST Watch Luxury.">
+    <title>Đặt Lại Mật Khẩu - TST Watch Luxury</title>
 
     <!-- Google Fonts Preconnect and Links for Luxury Theme -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Design System Sheet -->
-    <link href="/resources/client/css/luxury-theme.css?v=1.5" rel="stylesheet">
+    <link href="/resources/client/css/luxury-theme.css?v=1.9" rel="stylesheet">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
     <div class="auth-card-luxury">
         <!-- Logo -->
         <div class="auth-logo-luxury">
-            <span style="color: white; font-family: var(--font-heading);">Royal</span><span style="color: var(--gold-accent); font-family: var(--font-heading);">Watch</span>
+            <span style="color: white; font-family: var(--font-heading);">TST Watch</span> <span style="color: var(--gold-accent); font-family: var(--font-heading);">Luxury</span>
         </div>
         <h2 style="color: var(--text-primary); font-family: var(--font-heading); font-size: 1.5rem; font-weight: 400; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">
             Tạo mật khẩu mới

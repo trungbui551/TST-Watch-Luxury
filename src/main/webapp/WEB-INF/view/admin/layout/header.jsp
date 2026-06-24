@@ -14,9 +14,22 @@
 
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <div class="dropdown my-auto">
-                    <a href="#" class="dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    <a href="#" class="dropdown-toggle d-flex align-items-center" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <i class="fas fa-user fa-2x"></i>
+                        <div class="user-avatar-container">
+                            <c:set var="headerAvatar"
+                                value="${not empty sessionScope.images ? sessionScope.images : 'default-avatar.png'}" />
+                            <c:choose>
+                                <c:when test="${headerAvatar != 'default-avatar.png'}">
+                                    <img class="user-avatar-img" src="/images/avatar/${headerAvatar}" alt="User Avatar" />
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="user-avatar-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg-end p-4" style="min-width: 250px; max-width: 90vw;"
                         aria-labelledby="dropdownMenuLink">
@@ -31,7 +44,7 @@
                         </li>
                         <li><a class="dropdown-item" href="/client/update/${sessionScope.id}">Quản lý tài khoản</a></li>
                         <li><a class="dropdown-item" href="/client/history/${sessionScope.id}">Lịch sử mua hàng</a></li>
-                        <li><a class="dropdown-item" href="/admin/settings">Cấu hình gửi mail</a></li>
+                        <li><a class="dropdown-item" href="/admin/settings">Cấu hình hệ thống</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

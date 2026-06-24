@@ -73,7 +73,9 @@ public class SecurityConfiguration {
                                 "/userConfirm",
                                 "/handle-password",
                                 "/register",
-                                "/products/partial") // AJAX pagination endpoint
+                                "/products/partial",
+                                "/api/chat",
+                                "/services/**") // AJAX pagination, AI Chatbot & Luxury Services
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())

@@ -47,7 +47,8 @@ public class ProductController {
     public String createProductPage(Model model, @Valid @ModelAttribute("newProduct") Product laptop,
             BindingResult newUseBindingResult,
             @RequestParam("trungImg") MultipartFile file,
-            @RequestParam("subImg") MultipartFile[] subFiles) {
+            @RequestParam("subImg") MultipartFile[] subFiles,
+            @RequestParam(value = "dialColorImages", required = false) MultipartFile[] dialColorFiles) {
 
         List<FieldError> errors = newUseBindingResult.getFieldErrors();
         for (FieldError e : errors) {
@@ -75,6 +76,25 @@ public class ProductController {
             }
         }
         laptop.setImages(subImagesBuilder.toString());
+
+        // Lưu danh sách ảnh tương ứng màu mặt số (nếu có)
+        if (dialColorFiles != null && dialColorFiles.length > 0) {
+            StringBuilder dialColorsImagesBuilder = new StringBuilder();
+            for (MultipartFile dialColorFile : dialColorFiles) {
+                if (dialColorFile != null && !dialColorFile.isEmpty()) {
+                    String imgName = this.uploadService.handleSaverUploadFile(dialColorFile, "product");
+                    if (!imgName.isEmpty()) {
+                        if (dialColorsImagesBuilder.length() > 0) {
+                            dialColorsImagesBuilder.append(",");
+                        }
+                        dialColorsImagesBuilder.append(imgName);
+                    }
+                }
+            }
+            if (dialColorsImagesBuilder.length() > 0) {
+                laptop.setDialColorsImages(dialColorsImagesBuilder.toString());
+            }
+        }
 
         this.productService.handleSaveProduct(laptop);
         return "redirect:/admin/product";
@@ -129,7 +149,8 @@ public class ProductController {
     public String postUpdateProduct(Model model, @ModelAttribute("product") Product hoidanit,
             BindingResult newUseBindingResult,
             @RequestParam("newimg") MultipartFile file,
-            @RequestParam("subImg") MultipartFile[] subFiles) {
+            @RequestParam("subImg") MultipartFile[] subFiles,
+            @RequestParam(value = "dialColorImages", required = false) MultipartFile[] dialColorFiles) {
         List<FieldError> errors = newUseBindingResult.getFieldErrors();
         if (newUseBindingResult.hasErrors()) {
             return "admin/product/update";
@@ -162,6 +183,27 @@ public class ProductController {
                 }
             }
 
+            // Lưu danh sách ảnh tương ứng màu mặt số mới (nếu có)
+            if (dialColorFiles != null && dialColorFiles.length > 0) {
+                StringBuilder dialColorsImagesBuilder = new StringBuilder();
+                for (MultipartFile dialColorFile : dialColorFiles) {
+                    if (dialColorFile != null && !dialColorFile.isEmpty()) {
+                        String imgName = this.uploadService.handleSaverUploadFile(dialColorFile, "product");
+                        if (!imgName.isEmpty()) {
+                            if (dialColorsImagesBuilder.length() > 0) {
+                                dialColorsImagesBuilder.append(",");
+                            }
+                            dialColorsImagesBuilder.append(imgName);
+                        }
+                    }
+                }
+                if (dialColorsImagesBuilder.length() > 0) {
+                    currentProduct.setDialColorsImages(dialColorsImagesBuilder.toString());
+                }
+            } else {
+                currentProduct.setDialColorsImages(hoidanit.getDialColorsImages());
+            }
+
             System.out.println("---------------------------------------------------" + hoidanit.getFactory());
             currentProduct.setName(hoidanit.getName());
             currentProduct.setDetailDesc(hoidanit.getDetailDesc());
@@ -171,6 +213,10 @@ public class ProductController {
             currentProduct.setQuantity(hoidanit.getQuantity());
             currentProduct.setSold(hoidanit.getSold());
             currentProduct.setTarget(hoidanit.getTarget());
+            currentProduct.setIsUnique(hoidanit.getIsUnique());
+            currentProduct.setDialColors(hoidanit.getDialColors());
+            currentProduct.setStrapColors(hoidanit.getStrapColors());
+            currentProduct.setSizes(hoidanit.getSizes());
             this.productService.handleSaveProduct(currentProduct);
         }
         return "redirect:/admin/product";
@@ -182,6 +228,16 @@ public class ProductController {
             this.productService.deleteProduct(id);
         } catch (Exception e) {
             System.err.println("Error deleting product: " + e.getMessage());
+        }
+        return "redirect:/admin/product";
+    }
+
+    @PostMapping("/admin/product/restore")
+    public String restoreProduct(@RequestParam("id") long id) {
+        try {
+            this.productService.restoreProduct(id);
+        } catch (Exception e) {
+            System.err.println("Error restoring product: " + e.getMessage());
         }
         return "redirect:/admin/product";
     }

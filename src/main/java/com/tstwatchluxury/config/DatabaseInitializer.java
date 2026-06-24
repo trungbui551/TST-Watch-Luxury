@@ -11,6 +11,7 @@ import com.tstwatchluxury.domain.Order;
 import com.tstwatchluxury.domain.OrderDetail;
 import com.tstwatchluxury.domain.Cart;
 import com.tstwatchluxury.domain.CartDetail;
+import com.tstwatchluxury.domain.Review;
 import com.tstwatchluxury.repository.ProductRepository;
 import com.tstwatchluxury.repository.RoleRepository;
 import com.tstwatchluxury.repository.UserRepository;
@@ -18,6 +19,7 @@ import com.tstwatchluxury.repository.OrderRepository;
 import com.tstwatchluxury.repository.OrderDetailRepository;
 import com.tstwatchluxury.repository.CartRepository;
 import com.tstwatchluxury.repository.CartDetailRepository;
+import com.tstwatchluxury.repository.ReviewRepository;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +34,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final OrderDetailRepository orderDetailRepository;
     private final CartRepository cartRepository;
     private final CartDetailRepository cartDetailRepository;
+    private final ReviewRepository reviewRepository;
 
     public DatabaseInitializer(RoleRepository roleRepository,
                                UserRepository userRepository,
@@ -40,7 +43,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                                OrderRepository orderRepository,
                                OrderDetailRepository orderDetailRepository,
                                CartRepository cartRepository,
-                               CartDetailRepository cartDetailRepository) {
+                               CartDetailRepository cartDetailRepository,
+                               ReviewRepository reviewRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
@@ -49,6 +53,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.orderDetailRepository = orderDetailRepository;
         this.cartRepository = cartRepository;
         this.cartDetailRepository = cartDetailRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -355,7 +360,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             seikoPR = new Product();
             seikoPR.setName("Seiko Presage Cocktail Time");
             seikoPR.setPrice(12000000.0);
-            seikoPR.setImage("seiko_presage.jpg");
+            seikoPR.setImage("seiko_presage_green.png");
             seikoPR.setDetailDesc("Lấy cảm hứng từ những ly cocktail lộng lẫy tại quán bar Tokyo. Mặt số Seiko Presage được hoàn thiện dập tia tỏa nắng vô cùng tinh xảo, tạo hiệu ứng phản quang lấp lánh cuốn hút dưới mọi góc nhìn ánh sáng.");
             seikoPR.setShortDesc("Đồng hồ nam/nữ Seiko Presage Cocktail Time mặt số xanh lục bảo");
             seikoPR.setQuantity(15);
@@ -546,6 +551,148 @@ public class DatabaseInitializer implements CommandLineRunner {
 
                 System.out.println("-> Seeded demo cart and items for user@gmail.com successfully!");
             }
+        }
+
+        // 6. Update product attributes with realistic choices and dialColorsImages
+        Product rolexSubDb = this.productRepository.findByNameContainingIgnoreCase("Rolex Submariner Date 41mm").stream().findFirst().orElse(null);
+        if (rolexSubDb != null) {
+            rolexSubDb.setDialColors("Black,Green,Blue");
+            rolexSubDb.setStrapColors("Silver");
+            rolexSubDb.setSizes("41mm");
+            rolexSubDb.setImages("rolex_submariner_green.png,rolex_submariner_blue.png");
+            rolexSubDb.setDialColorsImages("rolex_submariner.jpg,rolex_submariner_green.png,rolex_submariner_blue.png");
+            rolexSubDb.setIsUnique(false);
+            this.productRepository.save(rolexSubDb);
+            System.out.println("-> Updated Rolex Submariner attributes & variant images.");
+        }
+
+        Product rolexDJDb = this.productRepository.findByNameContainingIgnoreCase("Rolex Datejust 36 Champagne").stream().findFirst().orElse(null);
+        if (rolexDJDb != null) {
+            rolexDJDb.setDialColors("Champagne,Silver,Blue");
+            rolexDJDb.setStrapColors("Gold-Silver,Silver");
+            rolexDJDb.setSizes("36mm");
+            rolexDJDb.setImages("rolex_datejust_silver.png,rolex_datejust_blue.png");
+            rolexDJDb.setDialColorsImages("rolex_datejust.jpg,rolex_datejust_silver.png,rolex_datejust_blue.png");
+            rolexDJDb.setIsUnique(false);
+            this.productRepository.save(rolexDJDb);
+            System.out.println("-> Updated Rolex Datejust attributes & variant images.");
+        }
+
+        Product cartierBBDb = this.productRepository.findByNameContainingIgnoreCase("Cartier Ballon Bleu de Cartier 33mm").stream().findFirst().orElse(null);
+        if (cartierBBDb != null) {
+            cartierBBDb.setDialColors("Silver,Pink");
+            cartierBBDb.setStrapColors("Silver");
+            cartierBBDb.setSizes("33mm");
+            cartierBBDb.setImages("cartier_ballon_pink.png");
+            cartierBBDb.setDialColorsImages("cartier_ballon.jpg,cartier_ballon_pink.png");
+            cartierBBDb.setIsUnique(false);
+            this.productRepository.save(cartierBBDb);
+            System.out.println("-> Updated Cartier Ballon Bleu attributes & variant images.");
+        }
+
+        Product omegaSMDb = this.productRepository.findByNameContainingIgnoreCase("Omega Seamaster Diver 300M Co-Axial").stream().findFirst().orElse(null);
+        if (omegaSMDb != null) {
+            omegaSMDb.setDialColors("Blue,Black");
+            omegaSMDb.setStrapColors("Silver,Rubber Black");
+            omegaSMDb.setSizes("42mm");
+            omegaSMDb.setImages("omega_seamaster_black.png");
+            omegaSMDb.setDialColorsImages("omega_seamaster.jpg,omega_seamaster_black.png");
+            omegaSMDb.setIsUnique(false);
+            this.productRepository.save(omegaSMDb);
+            System.out.println("-> Updated Omega Seamaster attributes & variant images.");
+        }
+
+        Product seikoPRDb = this.productRepository.findByNameContainingIgnoreCase("Seiko Presage Cocktail Time").stream().findFirst().orElse(null);
+        if (seikoPRDb != null) {
+            seikoPRDb.setImage("seiko_presage_green.png");
+            seikoPRDb.setDialColors("Green,Blue");
+            seikoPRDb.setStrapColors("Leather Brown,Silver");
+            seikoPRDb.setSizes("40.5mm");
+            seikoPRDb.setImages("seiko_presage_blue.png");
+            seikoPRDb.setDialColorsImages("seiko_presage_green.png,seiko_presage_blue.png");
+            seikoPRDb.setIsUnique(false);
+            this.productRepository.save(seikoPRDb);
+            System.out.println("-> Updated Seiko Presage attributes & variant images.");
+        }
+
+        Product hublotBBDb = this.productRepository.findByNameContainingIgnoreCase("Hublot Big Bang Sang Bleu II").stream().findFirst().orElse(null);
+        if (hublotBBDb != null) {
+            hublotBBDb.setIsUnique(true);
+            hublotBBDb.setDialColors("");
+            hublotBBDb.setStrapColors("");
+            hublotBBDb.setSizes("");
+            hublotBBDb.setDialColorsImages("");
+            this.productRepository.save(hublotBBDb);
+            System.out.println("-> Updated Hublot Big Bang as an exclusive Unique Piece.");
+        }
+
+        // Restrict other watches to their actual single-color / single-size to avoid fake selector fallbacks
+        String[][] singleOptWatches = {
+            {"Casio G-Shock G-Steel GST-B400", "Silver", "Silver", "45mm"},
+            {"Tissot Le Locle Powermatic 80", "Silver", "Silver", "39mm"},
+            {"Longines Master Collection Moonphase", "Silver", "Silver", "40mm"},
+            {"Patek Philippe Nautilus 5711/1A", "Blue", "Silver", "40mm"},
+            {"Orient Bambino Gen 2", "White", "Leather Brown", "40.5mm"},
+            {"Citizen C7 Automatic", "Grey", "Silver", "40mm"},
+            {"Seiko 5 Sports SRPD55K1", "Black", "Silver", "42.5mm"},
+            {"Casio Edifice EFV-600D", "Black", "Silver", "43mm"}
+        };
+        for (String[] watchData : singleOptWatches) {
+            Product p = this.productRepository.findByNameContainingIgnoreCase(watchData[0]).stream().findFirst().orElse(null);
+            if (p != null) {
+                p.setDialColors(watchData[1]);
+                p.setStrapColors(watchData[2]);
+                p.setSizes(watchData[3]);
+                p.setDialColorsImages(p.getImage()); // main image only
+                p.setIsUnique(false);
+                this.productRepository.save(p);
+            }
+        }
+
+        // 7. Seed reviews if reviews table is empty
+        if (this.reviewRepository.count() == 0) {
+            Product cartier = this.productRepository.findByNameContainingIgnoreCase("Cartier Ballon Bleu de Cartier 33mm").stream().findFirst().orElse(null);
+            Product rolex = this.productRepository.findByNameContainingIgnoreCase("Rolex Submariner Date 41mm").stream().findFirst().orElse(null);
+            User seededUser = this.userRepository.findOneByEmail("user@gmail.com");
+
+            if (cartier != null) {
+                Review r1 = new Review();
+                r1.setProduct(cartier);
+                r1.setUser(seededUser);
+                r1.setName(seededUser != null ? seededUser.getFullName() : "Khách Hàng Luxury");
+                r1.setEmail(seededUser != null ? seededUser.getEmail() : "user@gmail.com");
+                r1.setRating(5);
+                r1.setContent("Đồng hồ Cartier Ballon Bleu đeo lên tay rất sang trọng, mặt số hồng pastel cực kỳ tôn da quý cô. Shop đóng gói rất cẩn thận, phục vụ chuyên nghiệp!");
+                this.reviewRepository.save(r1);
+
+                Review r2 = new Review();
+                r2.setProduct(cartier);
+                r2.setName("Lê Thị Hương");
+                r2.setEmail("huongle@gmail.com");
+                r2.setRating(4);
+                r2.setContent("Sản phẩm rất đẹp và sắc nét, giữ giờ tốt. Tuy nhiên thời gian giao hàng hơi chậm hơn dự kiến 1 ngày. Tổng thể vẫn chấm 4 sao.");
+                this.reviewRepository.save(r2);
+            }
+
+            if (rolex != null) {
+                Review r3 = new Review();
+                r3.setProduct(rolex);
+                r3.setUser(seededUser);
+                r3.setName(seededUser != null ? seededUser.getFullName() : "Khách Hàng Luxury");
+                r3.setEmail(seededUser != null ? seededUser.getEmail() : "user@gmail.com");
+                r3.setRating(5);
+                r3.setContent("Đẳng cấp thượng lưu thực sự! Thép Oystersteel sáng bóng, vành xoay mượt mà, đeo đầm tay. Rất xứng đáng số tiền bỏ ra!");
+                this.reviewRepository.save(r3);
+
+                Review r4 = new Review();
+                r4.setProduct(rolex);
+                r4.setName("Hoàng Nam");
+                r4.setEmail("namhoang@gmail.com");
+                r4.setRating(4);
+                r4.setContent("Đồng hồ đeo rất đẹp, chống nước tốt. Dịch vụ chăm sóc khách hàng chu đáo.");
+                this.reviewRepository.save(r4);
+            }
+            System.out.println("-> Seeded initial review database entries.");
         }
 
         System.out.println(">>> DATABASE INITIALIZATION SEEDING COMPLETED SUCCESSFULLY.");

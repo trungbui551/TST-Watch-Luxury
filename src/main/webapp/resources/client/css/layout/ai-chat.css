@@ -1,0 +1,362 @@
+/* ==========================================================================
+   AI CHAT CONSULTANT - LUXURY FLOATING WIDGET STYLES
+   ========================================================================== */
+
+/* 1. Chat Widget Floating Trigger Button */
+#aiChatTrigger {
+    position: fixed;
+    bottom: 104px;
+    right: 28px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, var(--gold-light) 0%, var(--gold-accent) 70%, var(--gold-dark) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b0c10;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0px rgba(212, 175, 55, 0.4);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: aiPulse 2.5s infinite;
+}
+
+#aiChatTrigger:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+}
+
+#aiChatTrigger i {
+    transition: transform 0.4s ease;
+}
+
+#aiChatTrigger.active i {
+    transform: rotate(90deg);
+}
+
+/* 2. Main Chat Box Window */
+#aiChatWindow {
+    position: fixed;
+    bottom: 176px;
+    right: 28px;
+    width: 380px;
+    height: 520px;
+    background: rgba(17, 19, 26, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-thin);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#aiChatWindow.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* 3. Header Styling */
+.ai-chat-header {
+    background: #06070a;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-thin);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ai-chat-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-chat-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--gold-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-accent);
+    font-size: 16px;
+}
+
+.ai-chat-info h6 {
+    margin: 0;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.ai-chat-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #10b981;
+    font-family: var(--font-body);
+    font-weight: 300;
+}
+
+.ai-chat-status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #10b981;
+    border-radius: 50%;
+    animation: statusBlink 1.5s infinite;
+}
+
+.ai-chat-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.ai-chat-close:hover {
+    color: var(--text-primary);
+}
+
+/* 4. Messages Container */
+.ai-chat-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 175, 55, 0.2) transparent;
+}
+
+/* Scrollbar customizations */
+.ai-chat-body::-webkit-scrollbar {
+    width: 4px;
+}
+.ai-chat-body::-webkit-scrollbar-thumb {
+    background-color: rgba(212, 175, 55, 0.2);
+    border-radius: 4px;
+}
+
+/* Individual Message Bubbles */
+.ai-msg {
+    max-width: 80%;
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.6;
+    border-radius: 12px;
+}
+
+.ai-msg-client {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom-right-radius: 2px;
+}
+
+.ai-msg-server {
+    align-self: flex-start;
+    background: rgba(212, 175, 55, 0.03);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom-left-radius: 2px;
+}
+
+.ai-msg-server p {
+    margin-bottom: 8px;
+}
+.ai-msg-server p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-msg-server strong {
+    color: var(--gold-accent);
+    font-weight: 600;
+}
+
+.ai-msg-server ul, .ai-msg-server ol {
+    margin-top: 6px;
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+/* 5. Suggestion Pills */
+.ai-chat-suggestions {
+    padding: 0 20px 12px 20px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none; /* Hide scrollbar for standard browsers */
+}
+
+.ai-chat-suggestions::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.ai-pill {
+    white-space: nowrap;
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: var(--radius-full);
+    color: var(--gold-light);
+    font-size: 11.5px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ai-pill:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: var(--gold-accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* 6. Typing Indicator Animation */
+.ai-typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 8px;
+}
+
+.ai-typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold-accent);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: typingBounce 1.4s infinite both;
+}
+
+.ai-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ai-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* 7. Footer Input Form */
+.ai-chat-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-thin);
+    background: #06070a;
+}
+
+.ai-chat-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.ai-chat-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-thin);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #ffffff;
+    font-size: 13.5px;
+    font-family: var(--font-body);
+    font-weight: 300;
+    transition: all 0.3s ease;
+}
+
+.ai-chat-input:focus {
+    outline: none;
+    border-color: var(--gold-accent);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.ai-chat-input::placeholder {
+    color: var(--text-muted);
+}
+
+.ai-chat-send-btn {
+    width: 38px;
+    height: 38px;
+    background: var(--gold-accent);
+    border: none;
+    border-radius: 8px;
+    color: #0b0c10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ai-chat-send-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
+}
+
+/* ==========================================================================
+   KEYFRAMES & MEDIA QUERIES
+   ========================================================================== */
+@keyframes aiPulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0px rgba(212, 175, 55, 0.4);
+    }
+    70% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 12px rgba(212, 175, 55, 0);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0px rgba(212, 175, 55, 0);
+    }
+}
+
+@keyframes statusBlink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive constraints for smaller screens */
+@media (max-width: 480px) {
+    #aiChatTrigger {
+        width: 52px;
+        height: 52px;
+        bottom: 96px;
+        right: 32px;
+        font-size: 20px;
+    }
+    #aiChatWindow {
+        width: calc(100% - 32px);
+        height: calc(80vh - 120px);
+        bottom: 160px;
+        right: 16px;
+    }
+}

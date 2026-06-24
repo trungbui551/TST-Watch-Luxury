@@ -68,19 +68,27 @@ public class UserController {
 
     @PostMapping("/admin/user/update")
     public String postUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit,
-            @RequestParam("newimg") MultipartFile file) {
+            @RequestParam("newimg") MultipartFile file, jakarta.servlet.http.HttpSession session,
+            java.security.Principal principal) {
         User currentUser = this.userService.getUsersByID(hoidanit.getId());
         if (currentUser != null) {
             currentUser.setAddress(hoidanit.getAddress());
             currentUser.setFullName(hoidanit.getFullName());
             currentUser.setPhone(hoidanit.getPhone());
             Role role = this.userService.getRoleByName(hoidanit.getRole().getName());
-            if (file != null) {
+            if (file != null && !file.isEmpty()) {
                 String avatarFile = this.uploadService.handleSaverUploadFile(file, "avatar");
                 currentUser.setAvatar(avatarFile);
             }
             currentUser.setRole(role);
             this.userService.handleSaveUser(currentUser);
+
+            // Update session attributes for the logged-in user if they updated their own profile
+            if (principal != null && currentUser.getEmail().equals(principal.getName())) {
+                session.setAttribute("fullname", currentUser.getFullName());
+                session.setAttribute("images", currentUser.getAvatar());
+                session.setAttribute("role", currentUser.getRole().getName());
+            }
         }
         return "redirect:/admin/user";
     }

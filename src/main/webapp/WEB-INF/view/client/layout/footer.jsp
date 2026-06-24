@@ -112,9 +112,140 @@
         </div>
     </footer>
 
+    <!-- Global Add to Cart Modal (Luxury Style) -->
+    <div class="modal fade" id="globalAddCartModal" tabindex="-1" aria-labelledby="globalAddCartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-luxury">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="globalAddCartModalLabel" style="font-family: var(--font-heading); text-transform: uppercase; color: var(--gold-accent); font-size: 18px; letter-spacing: 1.5px;">Tùy chọn tuyệt tác</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <!-- Product Preview -->
+                    <div class="d-flex align-items-center gap-3 mb-4 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-thin); border-radius: var(--radius-sm);">
+                        <div style="width: 60px; height: 60px; padding: 4px; border: 1px solid var(--border-thin); border-radius: 4px; display: flex; align-items: center; justify-content: center; background: #06070a;">
+                            <img id="modalProductImg" src="" style="max-width: 100%; max-height: 100%; object-fit: contain;" alt="Product">
+                        </div>
+                        <div>
+                            <h6 id="modalProductTitle" style="font-family: var(--font-heading); color: #ffffff; margin: 0 0 4px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;"></h6>
+                            <span id="modalProductPrice" style="color: var(--gold-accent); font-family: var(--font-body); font-weight: 400; font-size: 14px;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Modal form that will be submitted -->
+                    <form id="modalAddToCartForm" method="post" action="">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        <!-- Unique Product Badge -->
+                         <div id="modalUniqueBadge" class="luxury-badge mb-4 d-none" style="font-size: 11px;">Tác phẩm độc bản / Unique Piece</div>
+
+                         <!-- Size Selection -->
+                         <div class="mb-4" id="modalSizeSection">
+                             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Kích thước (Đường kính)</div>
+                             <div class="d-flex gap-2" id="modalSizeSelector">
+                                 <!-- Will be rendered dynamically via JS -->
+                             </div>
+                             <div id="modalSizeError" class="size-error-msg"></div>
+                             <input type="hidden" name="size" id="modalSelectedSize" value="" />
+                         </div>
+
+                         <!-- Dial Color Selection -->
+                         <div class="mb-4" id="modalDialColorSection">
+                             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Màu mặt số (Dial Color)</div>
+                             <div class="d-flex gap-3 align-items-center" id="modalDialColorSelector">
+                                 <!-- Will be rendered dynamically via JS -->
+                             </div>
+                             <div id="modalDialColorDisplay" style="font-size: 12px; color: var(--gold-accent); margin-top: 6px; font-weight: 300; letter-spacing: 0.5px;">Vui lòng chọn màu mặt số</div>
+                             <input type="hidden" name="dialColor" id="modalSelectedDialColor" value="" />
+                         </div>
+
+                         <!-- Strap Color Selection -->
+                         <div class="mb-4" id="modalStrapColorSection">
+                             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Màu dây (Strap Color)</div>
+                             <div class="d-flex gap-3 align-items-center" id="modalStrapColorSelector">
+                                 <!-- Will be rendered dynamically via JS -->
+                             </div>
+                             <div id="modalStrapColorDisplay" style="font-size: 12px; color: var(--gold-accent); margin-top: 6px; font-weight: 300; letter-spacing: 0.5px;">Vui lòng chọn màu dây</div>
+                             <input type="hidden" name="strapColor" id="modalSelectedStrapColor" value="" />
+                         </div>
+
+                         <!-- Combined Color Value hidden input (legacy compatibility) -->
+                         <input type="hidden" name="color" id="modalSelectedColor" value="" />
+
+                        <!-- Quantity Selection -->
+                        <div class="mb-4">
+                            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 8px;">Số lượng</div>
+                            <div class="qty-control-luxury">
+                                <button type="button" class="qty-btn-luxury" id="modalQtyMinus" aria-label="Giảm số lượng">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                                <input type="text" class="qty-input-luxury" name="quantity" value="1"
+                                       id="modalQtyInput" min="1" readonly aria-label="Số lượng">
+                                <button type="button" class="qty-btn-luxury" id="modalQtyPlus" aria-label="Tăng số lượng">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-luxury-action">
+                            Xác Nhận Thêm Vào Giỏ Hàng
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== AI CHAT CONSULTANT WIDGET ===== -->
+    <link href="/resources/client/css/layout/ai-chat.css" rel="stylesheet">
+
+    <!-- Floating AI Chat Widget Trigger -->
+    <button type="button" id="aiChatTrigger" aria-label="Tư vấn với AI">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- AI Chat Window -->
+    <div id="aiChatWindow">
+        <div class="ai-chat-header">
+            <div class="ai-chat-title-wrap">
+                <div class="ai-chat-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-chat-info">
+                    <h6>Trợ Lý TST Luxury</h6>
+                    <div class="ai-chat-status">
+                        <span class="ai-chat-status-dot"></span>Trực tuyến
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="ai-chat-close" id="aiChatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <!-- Bubbles loaded dynamically -->
+        </div>
+        <div class="ai-chat-suggestions">
+            <button type="button" class="ai-pill" data-query="Cổ tay tôi 16.5cm nên đeo size mặt số bao nhiêu?">Đo size cổ tay</button>
+            <button type="button" class="ai-pill" data-query="Tư vấn đồng hồ nam thanh lịch đi làm công sở">Đồng hồ công sở</button>
+            <button type="button" class="ai-pill" data-query="Gợi ý đồng hồ lặn biển chống nước tốt">Đồng hồ lặn/thể thao</button>
+        </div>
+        <div class="ai-chat-footer">
+            <form id="aiChatForm" class="ai-chat-form">
+                <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Hỏi trợ lý TST Luxury..." autocomplete="off" required>
+                <button type="submit" class="ai-chat-send-btn" aria-label="Gửi">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/resources/client/js/layout/ai-chat.js" defer></script>
+    <!-- ===== END AI CHAT CONSULTANT WIDGET ===== -->
+
     <!-- ===== FACEBOOK MESSENGER CHAT PLUGIN ===== -->
     <div id="fb-root"></div>
-    <script src="/resources/client/js/layout/footer.js?v=1.5" defer></script>
+    <script src="/resources/client/js/layout/footer.js?v=2.0" defer></script>
 
     <div class="fb-customerchat" attribution="biz_inbox" page_id="1172919639219485" theme_color="#d4af37"
         logged_in_greeting="Xin chào! 👋 TST Watch Luxury rất vui được hỗ trợ bạn. Bạn cần tư vấn gì?"

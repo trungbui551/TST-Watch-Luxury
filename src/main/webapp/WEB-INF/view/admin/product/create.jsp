@@ -13,7 +13,7 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="/css/sb-admin.css?v=5.0" rel="stylesheet" />
+    <link href="/css/sb-admin.css?v=6.2" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -119,6 +119,47 @@
                             </div>
                         </div>
 
+                        <!-- Watch Option Attributes -->
+                        <div class="card p-3 mb-4 bg-light border-0 rounded-3">
+                            <h6 class="text-secondary mb-3"><i class="fas fa-sliders-h me-2"></i>Watch Attributes (Thuộc tính đồng hồ)</h6>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <form:checkbox class="form-check-input" id="isUnique" path="isUnique" />
+                                    <label class="form-check-label" for="isUnique">Độc bản (Unique Piece) - Ẩn lựa chọn size/màu</label>
+                                </div>
+                            </div>
+                            <div id="optionFields">
+                                <div class="row">
+                                    <div class="mb-3 col-12">
+                                        <label class="form-label">Sizes (Kích thước, phân cách bằng dấu phẩy):</label>
+                                        <form:input type="text" class="form-control" path="sizes" placeholder="e.g. 36mm,38mm,40mm,42mm" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Dial Colors (Màu mặt số):</label>
+                                        <form:input type="text" class="form-control" path="dialColors" placeholder="e.g. Silver,Black,Gold" />
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Strap Colors (Màu dây):</label>
+                                        <form:input type="text" class="form-control" path="strapColors" placeholder="e.g. Silver,Leather,Gold" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-12">
+                                        <label class="form-label">Tải lên ảnh tương ứng màu mặt số (theo thứ tự các màu):</label>
+                                        <input class="form-control" type="file" id="dialColorImageFiles" accept=".png, .jpg, .jpeg" name="dialColorImages" multiple />
+                                        <div class="mb-2 d-flex flex-wrap gap-2 mt-2" id="dialColorImgPreviewContainer"></div>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <label class="form-label">Hoặc tự điền Tên tệp ảnh các màu (phân cách bằng dấu phẩy):</label>
+                                        <form:input type="text" class="form-control" path="dialColorsImages" placeholder="e.g. image1.jpg,image2.jpg" />
+                                        <small class="text-muted d-block mt-1">Hệ thống sẽ ưu tiên tệp tải lên ở trên. Để trống để tự động gán theo thứ tự.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label for="avatarFile" class="form-label">Image:</label>
                             <input class="form-control" type="file" id="avatarFile"
@@ -159,6 +200,30 @@
                     container.append('<img src="' + imgURL + '" style="max-height: 80px; border: 1px solid #ccc; padding: 2px; border-radius: 4px;" />');
                 });
             });
+
+            $("#dialColorImageFiles").change(function (e) {
+                const container = $("#dialColorImgPreviewContainer");
+                container.empty();
+                Array.from(e.target.files).forEach(file => {
+                    const imgURL = URL.createObjectURL(file);
+                    container.append('<img src="' + imgURL + '" style="max-height: 80px; border: 1px solid #ccc; padding: 2px; border-radius: 4px;" />');
+                });
+            });
+
+            // Toggle watch options fields
+            const isUniqueCheckbox = $("#isUnique");
+            const optionFields = $("#optionFields");
+
+            function toggleOptionFields() {
+                if (isUniqueCheckbox.is(":checked")) {
+                    optionFields.slideUp(200);
+                } else {
+                    optionFields.slideDown(200);
+                }
+            }
+
+            isUniqueCheckbox.change(toggleOptionFields);
+            toggleOptionFields(); // Initial state setup
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

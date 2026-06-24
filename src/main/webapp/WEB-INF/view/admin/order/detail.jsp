@@ -15,7 +15,7 @@
                     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
                         rel="stylesheet" />
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="/css/sb-admin.css?v=5.0" rel="stylesheet" />
+    <link href="/css/sb-admin.css?v=6.2" rel="stylesheet" />
                     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
                         crossorigin="anonymous"></script>
                 </head>
@@ -31,11 +31,11 @@
                                 </div>
                             </main>
                             <div class="container mt-5">
-                                <div class="card mb-4 shadow-sm" style="border-radius: 8px; overflow: hidden;">
-                                    <div class="card-header bg-dark text-white py-3">
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header py-3">
                                         <h5 class="mb-0 font-monospace">Thông Tin Đơn Hàng VIP</h5>
                                     </div>
-                                    <div class="card-body bg-light p-4">
+                                    <div class="card-body p-4">
                                         <div class="row g-3">
                                             <div class="col-md-6 col-lg-3 border-end">
                                                 <span class="text-muted small text-uppercase d-block">Mã Đơn Hàng</span>
@@ -56,7 +56,24 @@
                                                 <strong class="text-danger" style="font-size: 16px;">
                                                     <fmt:formatNumber type="number" value="${order.totalPrice}" /> đ
                                                 </strong>
-                                                <span class="badge bg-warning text-dark d-inline-block ms-2">${order.status}</span>
+                                                <c:set var="statusTrim" value="${order.status.trim()}" />
+                                                <c:choose>
+                                                    <c:when test="${statusTrim == 'PENDING' || statusTrim == 'Đang xử lý'}">
+                                                        <span class="badge bg-warning text-dark d-inline-block ms-2">Đang xử lý</span>
+                                                    </c:when>
+                                                    <c:when test="${statusTrim == 'SHIPPING' || statusTrim == 'Đang giao hàng'}">
+                                                        <span class="badge bg-primary text-white d-inline-block ms-2">Đang giao hàng</span>
+                                                    </c:when>
+                                                    <c:when test="${statusTrim == 'DELIVERED' || statusTrim == 'Hoàn tất'}">
+                                                        <span class="badge bg-success text-white d-inline-block ms-2">Hoàn tất</span>
+                                                    </c:when>
+                                                    <c:when test="${statusTrim == 'CANCELLED' || statusTrim == 'Đã hủy'}">
+                                                        <span class="badge bg-danger text-white d-inline-block ms-2">Đã hủy</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="badge bg-secondary text-white d-inline-block ms-2">${order.status}</span>
+                                                    </c:otherwise>
+                                                </c:choose>
                                                 <span class="text-muted small d-block mt-1">Ngày đặt: ${order.orderDate}</span>
                                             </div>
                                         </div>
@@ -76,6 +93,7 @@
                                                     <th scope="col">Hình ảnh</th>
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Tên sản phẩm</th>
+                                                    <th scope="col">Kích thước & Màu sắc</th>
                                                     <th scope="col">Gía tiền </th>
                                                     <th scope="col">Số lượng</th>
                                                 </tr>
@@ -92,6 +110,10 @@
                                                         </td>
                                                         <td>${orderDetail.id}</td>
                                                         <td>${orderDetail.product.name}</td>
+                                                        <td>
+                                                            <div class="small">Size: <c:out value="${not empty orderDetail.size ? orderDetail.size : 'Tiêu chuẩn'}"/></div>
+                                                            <div class="small">Màu: <c:out value="${not empty orderDetail.color ? orderDetail.color : 'Tiêu chuẩn'}"/></div>
+                                                        </td>
                                                         <td>
                                                             <fmt:formatNumber type="number"
                                                                 value="${orderDetail.price}" /> đ

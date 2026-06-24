@@ -209,3 +209,165 @@ if (zoomContainer && zoomImage) {
         }
     });
 })();
+
+// Size Selector
+const sizeSelectorContainer = document.getElementById('sizeSelector');
+const sizeButtons = sizeSelectorContainer ? sizeSelectorContainer.querySelectorAll('.btn-size-pill') : [];
+const sizeInput = document.getElementById('selectedSize');
+const sizeError = document.getElementById('sizeError');
+const addToCartForm = document.getElementById('addToCartForm');
+
+if (sizeButtons.length > 0 && sizeInput) {
+    sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sizeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            sizeInput.value = btn.getAttribute('data-size');
+            if (sizeError) {
+                sizeError.classList.remove('show');
+            }
+        });
+    });
+}
+
+// Form validation
+if (addToCartForm && sizeInput) {
+    addToCartForm.addEventListener('submit', function(e) {
+        if (!sizeInput.value) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (sizeError) {
+                sizeError.textContent = 'Vui lòng lựa chọn kích thước phù hợp với cổ tay của quý khách!';
+                sizeError.classList.add('show');
+            }
+            if (sizeSelectorContainer) {
+                sizeSelectorContainer.classList.add('shake-anim');
+                setTimeout(() => {
+                    sizeSelectorContainer.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+    });
+}
+
+// Color Selectors (Dial Color & Strap Color) with Image Switching
+(function () {
+    const dialColorContainer = document.getElementById('dialColorSelector');
+    const dialColorButtons = dialColorContainer ? dialColorContainer.querySelectorAll('.btn-color-swatch') : [];
+    const dialColorInput = document.getElementById('selectedDialColor');
+    const dialColorDisplay = document.getElementById('dialColorDisplay');
+    
+    const strapColorContainer = document.getElementById('strapColorSelector');
+    const strapColorButtons = strapColorContainer ? strapColorContainer.querySelectorAll('.btn-color-swatch') : [];
+    const strapColorInput = document.getElementById('selectedStrapColor');
+    const strapColorDisplay = document.getElementById('strapColorDisplay');
+    
+    const colorInput = document.getElementById('selectedColor');
+    const mainImgEl = document.getElementById('watchZoomImage');
+
+    // Parse image configuration list
+    const config = window.ProductDetailConfig || {};
+    const mainImage = config.image || '';
+    const subImagesStr = config.images || '';
+    const dialColorsImagesStr = config.dialColorsImages || '';
+
+    // Parsed dial colors images mapping
+    let dialColorsImagesList = [];
+    if (dialColorsImagesStr) {
+        dialColorsImagesList = dialColorsImagesStr.split(',').map(img => img.trim()).filter(Boolean);
+    }
+
+    const imagesList = [mainImage];
+    if (subImagesStr) {
+        imagesList.push(...subImagesStr.split(','));
+    }
+
+    function updateCombinedColor() {
+        if (colorInput && dialColorInput && strapColorInput) {
+            colorInput.value = 'Mặt số: ' + dialColorInput.value + ' | Dây: ' + strapColorInput.value;
+        }
+    }
+
+    if (dialColorButtons.length > 0 && dialColorInput) {
+        dialColorButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                dialColorButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const dialVal = btn.getAttribute('data-color');
+                dialColorInput.value = dialVal;
+                if (dialColorDisplay) {
+                    dialColorDisplay.textContent = dialVal;
+                }
+                
+                updateCombinedColor();
+
+                // Switch main image to selected Dial Color image
+                const index = parseInt(btn.getAttribute('data-index') || 0, 10);
+                let targetImgName = mainImage;
+                if (dialColorsImagesList.length > index && dialColorsImagesList[index]) {
+                    targetImgName = dialColorsImagesList[index];
+                } else if (imagesList[index]) {
+                    targetImgName = imagesList[index];
+                }
+                if (mainImgEl && targetImgName) {
+                    mainImgEl.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImgEl.src = '/images/product/' + targetImgName;
+                        mainImgEl.style.opacity = '1';
+                    }, 150);
+
+                    // Sync corresponding thumbnail in the gallery
+                    const thumbs = document.querySelectorAll('.gallery-thumb-item');
+                    thumbs.forEach(thumb => {
+                        const thumbImgSrc = thumb.getAttribute('data-img');
+                        if (thumbImgSrc && (thumbImgSrc.endsWith(targetImgName) || thumbImgSrc.indexOf(targetImgName) !== -1)) {
+                            thumbs.forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    if (strapColorButtons.length > 0 && strapColorInput) {
+        strapColorButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                strapColorButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const strapVal = btn.getAttribute('data-color');
+                strapColorInput.value = strapVal;
+                if (strapColorDisplay) {
+                    strapColorDisplay.textContent = strapVal;
+                }
+                
+                updateCombinedColor();
+            });
+        });
+    }
+})();
+
+// Star rating selection logic in form
+(function() {
+    const starRatingSelector = document.getElementById('starRatingSelector');
+    const reviewRatingInput = document.getElementById('reviewRatingInput');
+    if (starRatingSelector && reviewRatingInput) {
+        const starItems = starRatingSelector.querySelectorAll('.star-input-item');
+        starItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const val = parseInt(item.getAttribute('data-value'), 10);
+                reviewRatingInput.value = val;
+                starItems.forEach(s => {
+                    const sVal = parseInt(s.getAttribute('data-value'), 10);
+                    if (sVal <= val) {
+                        s.classList.remove('star-empty');
+                        s.classList.add('star-filled');
+                    } else {
+                        s.classList.remove('star-filled');
+                        s.classList.add('star-empty');
+                    }
+                });
+            });
+        });
+    }
+})();

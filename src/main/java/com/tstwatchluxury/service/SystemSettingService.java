@@ -69,6 +69,21 @@ public class SystemSettingService {
             initSettingIfNotExist("EMAIL_PASSWORD", defaultMailPassword, "SMTP Password/App Password");
             initSettingIfNotExist("EMAIL_SMTP_AUTH", defaultMailSmtpAuth, "Enable SMTP Authentication (true/false)");
             initSettingIfNotExist("EMAIL_STARTTLS_ENABLE", defaultMailStarttlsEnable, "Enable STARTTLS (true/false)");
+            
+            // Discount Settings
+            initSettingIfNotExist("PROMO_ACTIVE", "false", "Is discount event active (true/false)");
+            initSettingIfNotExist("PROMO_TEXT", "SIÊU SALE MÙA HÈ - GIẢM NGAY 10% CHO TẤT CẢ ĐƠN HÀNG HÔM NAY!", "Announcement bar promotion text");
+            initSettingIfNotExist("PROMO_DISCOUNT", "10", "Discount percentage");
+            
+            // Banner Settings
+            initSettingIfNotExist("BANNER_BADGE", "Heritage Collection", "Banner badge text");
+            initSettingIfNotExist("BANNER_TITLE", "Kiệt tác thời gian<br/>đeo trên tay", "Banner main title");
+            initSettingIfNotExist("BANNER_SUBTITLE", "Nơi hội tụ những tuyệt tác đồng hồ cơ khí tinh xảo nhất thế giới. Tinh tế trong từng chuyển động, khẳng định đẳng cấp và phong thái người dẫn đầu.", "Banner description text");
+            initSettingIfNotExist("BANNER_BUTTON_TEXT", "Khám phá bộ sưu tập", "Banner button text");
+            initSettingIfNotExist("BANNER_IMAGE_URL", "/resources/client/images/luxury_watch_banner.png", "Banner background image URL");
+            
+            // AI Chatbot Settings
+            initSettingIfNotExist("AI_CHAT_API_KEY", "", "Google Gemini API Key for AI Chatbot");
         } catch (Exception e) {
             // Log warning, database might not be ready yet (e.g. during schema creation)
             System.err.println("Warning: Could not initialize default settings in database. " + e.getMessage());

@@ -58,7 +58,8 @@ public class ClientController {
     // nhan request va xu ly
     @PostMapping("/client/update")
     public String updateInformation(Model model, @ModelAttribute("presentUser") User user,
-            @RequestParam("newimg") MultipartFile file, RedirectAttributes redirectAttributes) {
+            @RequestParam("newimg") MultipartFile file, RedirectAttributes redirectAttributes,
+            jakarta.servlet.http.HttpSession session, java.security.Principal principal) {
 
         User currentUser = this.userService.getUsersByID(user.getId());
         if (currentUser != null) {
@@ -72,6 +73,13 @@ public class ClientController {
 
             System.out.println();
             this.userService.handleSaveUser(currentUser);
+            
+            // Update session attributes for the logged-in user if they updated their own profile
+            if (principal != null && currentUser.getEmail().equals(principal.getName())) {
+                session.setAttribute("fullname", currentUser.getFullName());
+                session.setAttribute("images", currentUser.getAvatar());
+            }
+            
             redirectAttributes.addFlashAttribute("message", "cập nhật thành công!");
         }
         return "redirect:/";
@@ -139,17 +147,20 @@ public class ClientController {
 
     @PostMapping("/handle-password")
     public String getHandlePasswordPage(HttpServletRequest request, @RequestParam("username") String email,
-            Model model) {
+            RedirectAttributes redirectAttributes, Model model) {
 
-        boolean check = this.userService.checkExistsEmail(email);
-        System.out.println("Email: " + email + " Check: \n" + check);
-        if (check == false) {
-            String error = "Tài khoản không tồn tại";
-            model.addAttribute("error", error);
+        User user = this.userService.getUserByEmail(email);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "Địa chỉ email không tồn tại trong hệ thống.");
             return "redirect:/forgotPassword";
         }
+        
+        if (!user.isEnabled()) {
+            redirectAttributes.addFlashAttribute("error", "Tài khoản của quý khách chưa được kích hoạt. Vui lòng kích hoạt qua email xác thực đăng ký.");
+            return "redirect:/forgotPassword";
+        }
+
         String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        User user = this.userService.getUserByEmail(email);
         eventPublisher.publishEvent(new OnResetPasswordEvent(user,
                 request.getLocale(), appUrl));
 

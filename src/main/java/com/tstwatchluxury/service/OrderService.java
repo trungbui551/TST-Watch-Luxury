@@ -78,6 +78,29 @@ public class OrderService {
         return result;
     }
 
+    public List<Object[]> getRevenueByDay() {
+        List<Object[]> data = this.orderRepository.getRevenueByDay();
+        List<Object[]> result = new ArrayList<>();
+
+        for (Object[] objects : data) {
+            Number dayNum = (Number) objects[0];
+            Number monthNum = (Number) objects[1];
+            Number yearNum = (Number) objects[2];
+            Number revenue = (Number) objects[3];
+            if (dayNum == null || monthNum == null || yearNum == null || revenue == null) {
+                System.out.println("Skipping NULL record");
+                continue;
+            }
+            int day = dayNum.intValue();
+            int month = monthNum.intValue();
+            int year = yearNum.intValue();
+            double total = revenue.doubleValue();
+            String label = String.format("%02d/%02d/%04d", day, month, year);
+            result.add(new Object[] { label, total });
+        }
+        return result;
+    }
+
     public List<Order> getListOrderForDashBoard() {
         return this.orderRepository.findAllByOrderByOrderDateDesc();
     }
@@ -182,4 +205,23 @@ public class OrderService {
         }
     }
 
+    public boolean hasUserPurchasedProduct(User user, Product product) {
+        if (user == null || product == null) return false;
+        List<Order> orders = this.orderRepository.findByUser(user);
+        if (orders == null || orders.isEmpty()) return false;
+        for (Order order : orders) {
+            String status = order.getStatus();
+            if (status != null && (status.trim().equalsIgnoreCase("DELIVERED") || status.trim().equalsIgnoreCase("Hoàn tất"))) {
+                List<OrderDetail> details = this.orderDetailRepository.findByOrder(order);
+                if (details != null) {
+                    for (OrderDetail detail : details) {
+                        if (detail.getProduct() != null && detail.getProduct().getId() == product.getId()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

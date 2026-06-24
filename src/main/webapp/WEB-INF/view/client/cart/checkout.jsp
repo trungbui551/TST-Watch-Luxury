@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link href="/resources/client/css/luxury-theme.css?v=1.5" rel="stylesheet">
+    <link href="/resources/client/css/luxury-theme.css?v=1.9" rel="stylesheet">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -91,7 +91,15 @@
                                     </div>
                                     <div>
                                         <div style="font-weight: 400; font-size: 14px; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.5px; font-family: var(--font-heading);">${de.product.name}</div>
-                                        <div style="font-size: 12px; color: var(--text-muted); font-family: var(--font-body); font-weight: 300;">Số lượng: x${de.quantity}</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); font-family: var(--font-body); font-weight: 300; display: flex; gap: 8px; flex-wrap: wrap;">
+                                            <span>Số lượng: x${de.quantity}</span>
+                                            <c:if test="${not empty de.size}">
+                                                <span style="color: var(--gold-accent);">| Size: ${de.size}</span>
+                                            </c:if>
+                                            <c:if test="${not empty de.color}">
+                                                <span style="color: var(--gold-accent);">| Màu: ${de.color}</span>
+                                            </c:if>
+                                        </div>
                                     </div>
                                 </div>
                                 <div style="font-weight: 400; color: var(--text-primary); font-size: 14px; font-family: var(--font-body);">
@@ -103,8 +111,14 @@
 
                     <div class="d-flex justify-content-between mb-3" style="color: var(--text-muted); font-size: 14px; font-family: var(--font-body); font-weight: 300;">
                         <span>Tạm tính</span>
-                        <span id="subtotal" data-cart-total-price="${totalPrice}" style="font-weight: 400; color: var(--text-primary);">
-                            <fmt:formatNumber type="number" value="${totalPrice}"/> đ
+                        <span id="subtotal" data-promo-active="${promoActive}" data-promo-discount="${promoDiscountPercent}" data-original-price="${originalPrice}" style="font-weight: 400; color: var(--text-primary);">
+                            <fmt:formatNumber type="number" value="${originalPrice}"/> đ
+                        </span>
+                    </div>
+                    <div id="promo-row" class="d-flex justify-content-between mb-3 ${promoActive == 'true' ? '' : 'd-none'}" style="color: var(--gold-accent); font-size: 14px; font-family: var(--font-body); font-weight: 400;">
+                        <span>Khuyến mãi (${promoDiscountPercent}%)</span>
+                        <span id="discount-amount">
+                            - <fmt:formatNumber type="number" value="${originalPrice * promoDiscountPercent / 100}"/> đ
                         </span>
                     </div>
                     <div class="d-flex justify-content-between mb-4" style="color: var(--text-muted); font-size: 14px; font-family: var(--font-body); font-weight: 300;">
@@ -114,7 +128,9 @@
 
                     <div class="d-flex justify-content-between py-4" style="border-top: 1px solid var(--border-thin); border-bottom: 1px solid var(--border-thin); margin-bottom: 24px;">
                         <span style="font-weight: 500; font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary); letter-spacing: 1.5px; text-transform: uppercase;">Tổng cộng</span>
-                        <span id="total" style="font-weight: 400; font-size: 1.25rem; color: var(--gold-accent); font-family: var(--font-body);"></span>
+                        <span id="total" style="font-weight: 400; font-size: 1.25rem; color: var(--gold-accent); font-family: var(--font-body);">
+                            <fmt:formatNumber type="number" value="${totalPrice}"/> đ
+                        </span>
                     </div>
 
                     <!-- Hidden fields -->

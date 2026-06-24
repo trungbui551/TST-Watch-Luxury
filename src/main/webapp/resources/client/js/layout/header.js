@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Check if it's the post add to cart form
         if (form.method.toLowerCase() === 'post' && actionUrl.indexOf('/add-product-to-cart/') !== -1) {
+            var sizeInputEl = form.querySelector('[name="size"]');
+            if (!sizeInputEl || !sizeInputEl.value) {
+                // Do not intercept and run AJAX. Let global modal handle this!
+                return;
+            }
+            
             if (!isAuthenticated) {
                 // Not logged in: let standard POST redirect to login page
                 return;
@@ -40,7 +46,17 @@ document.addEventListener('DOMContentLoaded', function () {
             
             var parts = actionUrl.split('/');
             var productId = parts[parts.length - 1];
-            var apiUrl = '/api/add-to-cart/' + productId;
+            
+            var sizeVal = form.querySelector('[name="size"]') ? form.querySelector('[name="size"]').value : '';
+            var colorVal = form.querySelector('[name="color"]') ? form.querySelector('[name="color"]').value : '';
+            var qtyVal = form.querySelector('[name="quantity"]') ? form.querySelector('[name="quantity"]').value : '1';
+            
+            var params = new URLSearchParams();
+            if (sizeVal) params.append('size', sizeVal);
+            if (colorVal) params.append('color', colorVal);
+            if (qtyVal) params.append('quantity', qtyVal);
+            
+            var apiUrl = '/api/add-to-cart/' + productId + '?' + params.toString();
             
             var cartBtn = document.getElementById('navbarCartBtn');
             
@@ -69,6 +85,11 @@ document.addEventListener('DOMContentLoaded', function () {
                                 newBadge.textContent = response.newSum;
                                 cartBtn.appendChild(newBadge);
                             }
+                        }
+                        
+                        // Show premium animated toast notification
+                        if (typeof window.showPremiumToast === 'function') {
+                            window.showPremiumToast('Đã thêm sản phẩm vào giỏ hàng thành công!');
                         }
                     } else {
                         console.error('Add-to-cart API failed:', response.message);
